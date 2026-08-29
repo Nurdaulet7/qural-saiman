@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Инструмент — QURAL-SAIMAN</title>
+<meta name="theme-color" content="#FFFFFF">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+<script>if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});</script>
+</head>
+<body>
+<div class="app">
+
+<div class="dtopbar">
+  <div class="dtop-info">
+    <span><i data-lucide="map-pin"></i>Шымкент, м-н Кайтпас-1, ул. Мустафы Шокая, 9а</span>
+    <span><i data-lucide="clock"></i>Пн–Пт 08:00–20:00 · Сб–Вс 08:00–17:00</span>
+    <span><i data-lucide="phone"></i>+7 705 780 2074</span>
+  </div>
+  <div class="dtop-lang"><button class="on" type="button">RU</button><button type="button">KZ</button></div>
+</div>
+
+<div class="appbar catbar" id="appbar">
+  <div class="row">
+    <a class="iconbtn back" href="catalog.html" id="backBtn" aria-label="Назад"><i data-lucide="arrow-left"></i></a>
+    <a href="index.html" class="brand" style="gap:5px">
+      <span class="mark"></span>
+      <span class="wm"><b>QURAL<i>–</i><u>SAIMAN</u></b><em>SERVICE</em></span>
+    </a>
+    <nav class="dnav">
+      <a href="index.html">Главная</a>
+      <a href="catalog.html" class="on">Каталог</a>
+      <a href="dgu.html">Генераторы</a>
+      <a href="terms.html">Условия</a>
+      <a href="responsibility.html">Ответственность</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+    <span class="spacer"></span>
+    <div class="dtools">
+      <a class="dicon dcart" href="cart.html" aria-label="Корзина"><i data-lucide="shopping-cart"></i><span class="dot" data-cart-dot>0</span></a>
+      <a class="dphone" href="tel:+77057802074"><i data-lucide="phone"></i>+7 705 780 2074</a>
+    </div>
+    <button class="iconbtn" id="favBtn" aria-label="В избранное"><i data-lucide="heart"></i></button>
+    <a class="iconbtn call" href="tel:+77057802074" aria-label="Позвонить"><i data-lucide="phone"></i></a>
+  </div>
+</div>
+
+<nav class="pcrumbs" id="pCrumbs"></nav>
+
+<div id="pRoot"></div>
+
+</div>
+
+<footer class="dfooter">
+  <div class="dfoot-col">
+    <span class="dfoot-brand"><span class="dfmark"></span><span class="wm"><b>QURAL<i>–</i><u>SAIMAN</u></b><em>SERVICE</em></span></span>
+    <p>Прокат строительного инструмента в Шымкенте. Более 80 позиций на складе, без залога.</p>
+  </div>
+  <div class="dfoot-col">
+    <b>Навигация</b>
+    <a href="index.html">Главная</a>
+    <a href="catalog.html">Каталог</a>
+    <a href="dgu.html">Дизель-генераторы</a>
+    <a href="cart.html">Корзина</a>
+  </div>
+  <div class="dfoot-col">
+    <b>Информация</b>
+    <a href="delivery.html">Доставка</a>
+    <a href="payment.html">Оплата</a>
+    <a href="terms.html">Условия аренды</a>
+    <a href="faq.html">Вопросы</a>
+  </div>
+  <div class="dfoot-col">
+    <b>Контакты</b>
+    <a class="dfoot-phone" href="tel:+77057802074"><i data-lucide="phone"></i>+7 705 780 2074</a>
+    <span><i data-lucide="map-pin"></i>ул. Мустафы Шокая, 9а, Шымкент</span>
+    <span><i data-lucide="clock"></i>Пн–Пт 08:00–20:00 · Сб–Вс 08:00–17:00</span>
+  </div>
+  <div class="dfoot-bottom">
+    <span>© 2026 QURAL-SAIMAN · Прокат инструмента, Шымкент</span>
+    <div class="dfoot-legal">
+      <a href="privacy.html">Конфиденциальность</a>
+      <a href="terms.html">Условия аренды</a>
+      <a href="return.html">Возврат</a>
+    </div>
+  </div>
+</footer>
+
+<nav class="tabs">
+  <a class="tab" href="index.html"><span class="icwrap"><i data-lucide="home"></i></span><span>Главная</span></a>
+  <a class="tab on" href="catalog.html"><span class="icwrap"><i data-lucide="layout-grid"></i></span><span>Каталог</span></a>
+  <a class="tab" href="contacts.html"><span class="icwrap"><i data-lucide="map-pin"></i></span><span>Контакты</span></a>
+  <a class="tab" href="cart.html"><span class="icwrap"><i data-lucide="shopping-cart"></i><span class="dot" data-cart-dot>0</span></span><span>Корзина</span></a>
+  <a class="tab" href="info.html"><span class="icwrap"><i data-lucide="menu"></i></span><span>Ещё</span></a>
+</nav>
+
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<script src="tools-data.js"></script>
+<script src="cat-icons.js"></script>
+<script src="app-cart.js"></script>
+<script src="callback-widget.js"></script>
+<script src="app-search.js" defer></script>
+<script src="product-app.js" defer></script>
+</body>
+</html>

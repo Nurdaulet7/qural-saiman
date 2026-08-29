@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Админка · QURAL-SAIMAN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--orange:#E27D20;--orange-dark:#C66A15;--orange-soft:#FFF4E8;--ink:#1A1A1A;--ink-2:#2E2E2C;--muted:#6B6B66;--muted-2:#9A9A93;--bg:#fff;--bg-soft:#F6F6F3;--line:#EAEAE5;--line-2:#DEDED8;--r-lg:22px;--r:16px;--r-sm:12px;--t:.18s ease;--green:#1F9254;--green-soft:#E9F7EF;--red:#C0392B;--red-soft:#FDECEA}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:'Manrope',system-ui,sans-serif;font-size:14px;line-height:1.5;color:var(--ink);background:var(--bg-soft);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--orange)}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+svg{width:17px;height:17px;stroke-width:2;flex:none}
+.shell{display:grid;grid-template-columns:236px minmax(0,1fr);min-height:100vh}
+/* SIDEBAR */
+.side{background:#171614;color:#fff;display:flex;flex-direction:column;padding:18px 14px;position:sticky;top:0;height:100vh}
+.side .lg{display:flex;align-items:center;gap:10px;padding:4px 8px 20px}
+.side .lg b{font-size:15px;letter-spacing:-.02em}
+.side .lg span{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--orange);font-weight:800;font-size:14px}
+.side .grp{font-size:10.5px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:rgba(255,255,255,.34);padding:14px 8px 7px}
+.snav{display:flex;flex-direction:column;gap:2px}
+.snav a{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:10px;font-size:13.5px;font-weight:700;color:rgba(255,255,255,.72);transition:background var(--t),color var(--t)}
+.snav a svg{width:16px;height:16px;opacity:.8}
+.snav a:hover{background:rgba(255,255,255,.07);color:#fff}
+.snav a.on{background:var(--orange);color:#fff}
+.snav a.on svg{opacity:1}
+.snav a .cnt{margin-left:auto;font-size:11.5px;font-weight:800;color:rgba(255,255,255,.45)}
+.snav a.on .cnt{color:rgba(255,255,255,.8)}
+.side .foot{margin-top:auto;border-top:1px solid rgba(255,255,255,.1);padding-top:14px;display:flex;align-items:center;gap:10px}
+.side .foot .av{width:32px;height:32px;border-radius:50%;background:#3A3833;display:grid;place-items:center;font-size:12px;font-weight:800}
+.side .foot .who{min-width:0;line-height:1.25}
+.side .foot .who b{display:block;font-size:12.5px}
+.side .foot .who span{font-size:11px;color:rgba(255,255,255,.4)}
+.side .foot button{margin-left:auto;opacity:.5}
+.side .foot button:hover{opacity:1}
+/* MAIN */
+.main{min-width:0;display:flex;flex-direction:column}
+.top{background:var(--bg);border-bottom:1px solid var(--line);padding:0 26px;height:64px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:5}
+.top h1{font-size:19px}
+.crumb{font-size:11.5px;font-weight:700;color:var(--muted-2);letter-spacing:.02em;margin-bottom:2px}
+.top .sp{flex:1}
+.btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 15px;border-radius:11px;font-size:13.5px;font-weight:800;transition:background var(--t),border-color var(--t)}
+.btn.pri{background:var(--orange);color:#fff}
+.btn.pri:hover{background:var(--orange-dark)}
+.btn.sec{background:var(--bg-soft);border:1px solid var(--line-2);color:var(--ink)}
+.btn.sec:hover{border-color:var(--muted-2)}
+.btn.ghost{color:var(--muted)}
+.btn.ghost:hover{color:var(--ink);background:var(--bg-soft)}
+.btn svg{width:15px;height:15px}
+.body{padding:22px 26px 40px;display:flex;flex-direction:column;gap:16px}
+/* STATS */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:15px 16px}
+.kpi span{display:block;font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:.02em}
+.kpi b{display:block;font-size:24px;letter-spacing:-.03em;margin-top:5px}
+.kpi i{font-style:normal;font-size:11.5px;font-weight:700;color:var(--green)}
+/* TOOLBAR */
+.tbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.srch{flex:1;min-width:220px;position:relative}
+.srch svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted-2);width:16px;height:16px}
+.srch input{width:100%;height:40px;padding:0 14px 0 38px;border-radius:11px;border:1px solid var(--line-2);background:var(--bg);font-size:13.5px;outline:none;transition:border-color var(--t)}
+.srch input:focus{border-color:var(--orange)}
+.sel{height:40px;padding:0 32px 0 13px;border-radius:11px;border:1px solid var(--line-2);background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B6B66' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 11px center/14px;font:inherit;font-size:13.5px;font-weight:700;appearance:none;cursor:pointer}
+/* TABLE */
+.card{background:var(--bg);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.tscroll{overflow-x:auto}
+table{min-width:760px}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2);padding:12px 14px;border-bottom:1px solid var(--line);background:var(--bg-soft);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#FCFCFA}
+.tname{display:flex;align-items:center;gap:12px;min-width:0}
+.tname .ph{width:46px;height:46px;border-radius:10px;background:var(--bg-soft);border:1px solid var(--line);flex:none;display:grid;place-items:center;overflow:hidden}
+.tname .ph img{width:100%;height:100%;object-fit:contain;padding:4px;mix-blend-mode:multiply}
+.tname .tx{min-width:0}
+.tname b{display:block;font-size:13.5px;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tname span{font-size:11.5px;color:var(--muted-2);font-weight:600}
+.chip{display:inline-flex;align-items:center;height:24px;padding:0 9px;border-radius:7px;background:var(--bg-soft);border:1px solid var(--line-2);font-size:11.5px;font-weight:700;color:var(--muted);white-space:nowrap}
+.price{font-size:14px;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
+.price small{display:block;font-size:11px;font-weight:700;color:var(--muted-2);letter-spacing:0}
+.st{display:inline-flex;align-items:center;gap:6px;height:25px;padding:0 9px;border-radius:7px;font-size:11.5px;font-weight:800;white-space:nowrap}
+.st::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.st.ok{background:var(--green-soft);color:var(--green)}
+.st.hid{background:var(--bg-soft);color:var(--muted-2)}
+.acts{display:flex;gap:4px;justify-content:flex-end}
+.ib{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;color:var(--muted);transition:background var(--t),color var(--t)}
+.ib:hover{background:var(--bg-soft);color:var(--ink)}
+.ib.dl:hover{background:var(--red-soft);color:var(--red)}
+.tfoot{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg-soft);border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);font-weight:700}
+.tfoot .pg{margin-left:auto;display:flex;gap:4px}
+.tfoot .pg button{width:30px;height:30px;border-radius:8px;border:1px solid var(--line-2);background:var(--bg);font-size:12.5px;font-weight:800}
+.tfoot .pg button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+/* DRAWER (edit form) */
+.scrim{position:fixed;inset:0;background:rgba(20,18,16,.42);opacity:0;pointer-events:none;transition:opacity var(--t);z-index:20}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:560px;max-width:94vw;background:var(--bg);z-index:21;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .26s cubic-bezier(.32,.72,0,1);box-shadow:-24px 0 60px -30px rgba(0,0,0,.4)}
+body.open .scrim{opacity:1;pointer-events:auto}
+body.open .drawer{transform:none}
+.dhead{display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid var(--line)}
+.dhead h2{font-size:17px}
+.dhead .crumb{margin:0}
+.dhead button{margin-left:auto}
+.dbody{flex:1;overflow-y:auto;padding:20px 22px 26px;display:flex;flex-direction:column;gap:20px}
+.fsec{display:flex;flex-direction:column;gap:12px}
+.fsec>.lab{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted-2)}
+.f{display:flex;flex-direction:column;gap:6px}
+.f label{font-size:12.5px;font-weight:700;color:var(--ink-2)}
+.f .hint{font-size:11.5px;color:var(--muted-2);font-weight:600}
+.f input,.f textarea,.f select{width:100%;min-height:42px;padding:10px 13px;border-radius:11px;border:1px solid var(--line-2);background:var(--bg);font:inherit;font-size:13.5px;outline:none;transition:border-color var(--t);resize:vertical}
+.f input:focus,.f textarea:focus,.f select:focus{border-color:var(--orange)}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.drop{display:flex;align-items:center;gap:14px;padding:12px;border:1.5px dashed var(--line-2);border-radius:14px;background:var(--bg-soft)}
+.drop .pv{width:76px;height:76px;border-radius:11px;background:var(--bg);border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;flex:none}
+.drop .pv img{width:100%;height:100%;object-fit:contain;padding:6px;mix-blend-mode:multiply}
+.drop .tx{min-width:0}
+.drop .tx b{display:block;font-size:13px}
+.drop .tx span{font-size:11.5px;color:var(--muted-2);font-weight:600}
+.drop .tx .row{display:flex;gap:7px;margin-top:8px}
+.drop .tx .row button{height:31px;padding:0 11px;border-radius:9px;font-size:12px;font-weight:800;background:var(--bg);border:1px solid var(--line-2)}
+.drop .tx .row button.dl{color:var(--red);border-color:#F0CFCB}
+.sw{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px}
+.sw .tx b{display:block;font-size:13px}
+.sw .tx span{font-size:11.5px;color:var(--muted-2);font-weight:600}
+.sw .tg{margin-left:auto;width:42px;height:25px;border-radius:99px;background:var(--line-2);position:relative;flex:none;transition:background var(--t)}
+.sw .tg::after{content:"";position:absolute;top:3px;left:3px;width:19px;height:19px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform var(--t)}
+.sw .tg.on{background:var(--green)}
+.sw .tg.on::after{transform:translateX(17px)}
+.langtab{display:flex;gap:4px;background:var(--bg-soft);border:1px solid var(--line);border-radius:10px;padding:3px;align-self:flex-start}
+.langtab button{height:28px;padding:0 13px;border-radius:8px;font-size:12px;font-weight:800;color:var(--muted)}
+.langtab button.on{background:var(--bg);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.langtab button:not(.on) i{font-style:normal;color:var(--orange-dark);margin-left:5px}
+.dfoot{display:flex;align-items:center;gap:10px;padding:14px 22px;border-top:1px solid var(--line);background:var(--bg-soft)}
+.dfoot .btn.pri{height:42px;padding:0 20px}
+.dfoot .del{margin-left:auto;color:var(--red);font-size:12.5px;font-weight:800}
+.note{display:flex;gap:11px;padding:13px 15px;border-radius:13px;background:var(--orange-soft);border:1px solid #F5DFC5;font-size:12.5px;line-height:1.5;color:#7A4A12;font-weight:600}
+.note svg{color:var(--orange-dark);margin-top:1px}
+@media (max-width:1100px){.shell{grid-template-columns:1fr}.side{display:none}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="side">
+    <div class="lg"><span>Q</span><b>QURAL-SAIMAN</b></div>
+    <div class="grp">Каталог</div>
+    <nav class="snav">
+      <a href="#" class="on"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Инструменты<span class="cnt">88</span></a>
+      <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>Категории<span class="cnt">20</span></a>
+      <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>Генераторы ДГУ<span class="cnt">12</span></a>
+      <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>Цены и скидки</a>
+      <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>Фото и медиа</a>
+      <div class="grp">Прочее</div>
+      <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-2.8 1.17V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 7.7 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 3.6 15H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 7.7a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 3.6V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 2.8 1.17l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 20.4 9H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>Настройки</a>
+      <a href="/index.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>Открыть сайт</a>
+    </nav>
+    <div class="foot">
+      <div class="av">Н</div>
+      <div class="who"><b>Нурдаулет</b><span>Владелец</span></div>
+      <button aria-label="Выйти"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg></button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="top">
+      <div><div class="crumb">Каталог</div><h1>Инструменты</h1></div>
+      <div class="sp"></div>
+      <button class="btn sec"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></svg>Импорт из Excel</button>
+      <button class="btn pri" onclick="document.body.classList.add('open')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Добавить инструмент</button>
+    </header>
+
+    <div class="body">
+      <div class="kpis">
+        <div class="kpi"><span>Всего позиций</span><b>88</b><i>+3 за неделю</i></div>
+        <div class="kpi"><span>Категорий</span><b>20</b></div>
+        <div class="kpi"><span>Скрыто с сайта</span><b>6</b></div>
+        <div class="kpi"><span>Без фото</span><b>2</b></div>
+      </div>
+
+      <div class="tbar">
+        <div class="srch"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input type="text" placeholder="Поиск по названию, бренду или артикулу" /></div>
+        <select class="sel"><option>Все категории</option><option>Перфораторы и отбойники</option><option>Бензиновые генераторы</option><option>Вышки-туры и леса</option></select>
+        <select class="sel"><option>Все позиции</option><option>Опубликованные</option><option>Скрытые</option></select>
+        <select class="sel"><option>Сначала новые</option><option>По названию</option><option>По цене</option></select>
+      </div>
+
+      <div class="card">
+        <div class="tscroll">
+        <table>
+          <thead><tr><th>Инструмент</th><th>Категория</th><th>Цена / сутки</th><th>На сайте</th><th></th></tr></thead>
+          <tbody>
+            <tr>
+              <td><div class="tname"><div class="ph"><img src="assets/tools/alteco-apg-9800-te.png" alt="" /></div><div class="tx"><b>ALTECO APG 9800 TE</b><span>ALTECO · Бензиновый · 7 кВт</span></div></div></td>
+              <td><span class="chip">Бензиновые генераторы</span></td>
+              <td><div class="price">8 000 ₸</div></td>
+              <td><span class="st ok">Опубликован</span></td>
+              <td><div class="acts"><button class="ib" onclick="document.body.classList.add('open')" aria-label="Изменить"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg></button><button class="ib" aria-label="Дублировать"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button><button class="ib dl" aria-label="Удалить"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div></td>
+            </tr>
+            <tr>
+              <td><div class="tname"><div class="ph"><img src="assets/tools/betonosmesitel-kedr-130-l.png" alt="" /></div><div class="tx"><b>Бетоносмеситель KEDR 130 л</b><span>KEDR · Электрический</span></div></div></td>
+              <td><span class="chip">Бетонное оборудование</span></td>
+              <td><div class="price">3 500 ₸</div></td>
+              <td><span class="st ok">Опубликован</span></td>
+              <td><div class="acts"><button class="ib" onclick="document.body.classList.add('open')" aria-label="Изменить"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg></button><button class="ib" aria-label="Дублировать"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button><button class="ib dl" aria-label="Удалить"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div></td>
+            </tr>
+            <tr>
+              <td><div class="tname"><div class="ph"><img src="assets/tools/vyshka-tura-vs-250-1-2-1-2h2-m.png" alt="" /></div><div class="tx"><b>Вышка-тура ВС-250/1,2 (1,2х2 м)</b><span>Ручной · до 250 кг</span></div></div></td>
+              <td><span class="chip">Вышки-туры и леса</span></td>
+              <td><div class="price">2 600 ₸<small>от 2 600 до 5 000</small></div></td>
+              <td><span class="st ok">Опубликован</span></td>
+              <td><div class="acts"><button class="ib" onclick="document.body.classList.add('open')" aria-label="Изменить"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg></button><button class="ib" aria-label="Дублировать"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button><button class="ib dl" aria-label="Удалить"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div></td>
+            </tr>
+            <tr>
+              <td><div class="tname"><div class="ph"><img src="assets/tools/drel-mikser-patriot-dm-100.png" alt="" /></div><div class="tx"><b>Дрель-миксер PATRIOT DM 100</b><span>PATRIOT · Электрический · 1400 Вт</span></div></div></td>
+              <td><span class="chip">Бетонное оборудование</span></td>
+              <td><div class="price">1 500 ₸</div></td>
+              <td><span class="st hid">Скрыт</span></td>
+              <td><div class="acts"><button class="ib" onclick="document.body.classList.add('open')" aria-label="Изменить"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg></button><button class="ib" aria-label="Дублировать"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button><button class="ib dl" aria-label="Удалить"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="tfoot">Показано 4 из 88<div class="pg"><button>‹</button><button class="on">1</button><button>2</button><button>3</button><button>›</button></div></div>
+      </div>
+
+      <div class="note"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span>Это дизайн-макет админки. Все данные — из текущего каталога, кнопки открывают форму, но ничего не сохраняют. Реальная версия работает на Next.js + Supabase — см. пакет передачи разработке.</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="scrim" onclick="document.body.classList.remove('open')"></div>
+<aside class="drawer">
+  <div class="dhead">
+    <div><div class="crumb">Инструмент</div><h2>ALTECO APG 9800 TE</h2></div>
+    <button class="ib" onclick="document.body.classList.remove('open')" aria-label="Закрыть"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  </div>
+  <div class="dbody">
+    <div class="fsec">
+      <div class="langtab"><button class="on">Русский</button><button>Қазақша <i>черновик</i></button></div>
+      <div class="f"><label>Название</label><input type="text" value="ALTECO APG 9800 TE" /></div>
+      <div class="f"><label>Краткое описание</label><textarea rows="2">Мощность 7 кВт (макс. 7,5 кВт), напряжение 220/380 В</textarea><span class="hint">Показывается в карточке каталога, до 90 символов</span></div>
+      <div class="f2">
+        <div class="f"><label>Категория</label><select><option>Бензиновые генераторы</option><option>Сварочное оборудование</option></select></div>
+        <div class="f"><label>Бренд</label><input type="text" value="ALTECO" /></div>
+      </div>
+      <div class="f2">
+        <div class="f"><label>Тип питания</label><select><option>Бензиновый</option><option>Электрический</option><option>Ручной</option><option>Дизельный</option></select></div>
+        <div class="f"><label>Артикул / slug</label><input type="text" value="alteco-apg-9800-te" /></div>
+      </div>
+    </div>
+
+    <div class="fsec">
+      <div class="lab">Фото</div>
+      <div class="drop">
+        <div class="pv"><img src="assets/tools/alteco-apg-9800-te.png" alt="" /></div>
+        <div class="tx"><b>alteco-apg-9800-te.png</b><span>PNG · 800×800 · 148 КБ</span><div class="row"><button>Заменить</button><button>Обрезать</button><button class="dl">Удалить</button></div></div>
+      </div>
+      <span class="hint">Перетащите файл сюда или нажмите «Заменить». Лучше квадратное фото на белом фоне, минимум 800×800.</span>
+    </div>
+
+    <div class="fsec">
+      <div class="lab">Цена</div>
+      <div class="f2">
+        <div class="f"><label>Цена за сутки, ₸</label><input type="text" value="8 000" /></div>
+        <div class="f"><label>Залог, ₸</label><input type="text" value="30 000" /></div>
+      </div>
+      <div class="f"><label>Примечание к цене</label><input type="text" placeholder="Напр.: от 2 600 (1,2 м) до 5 000 (6,0 м)" /><span class="hint">Если цена зависит от комплектации — напишите здесь, в карточке появится подпись под ценой</span></div>
+      <div class="f"><label>Скидка при длительной аренде</label><select><option>Стандартная сетка (7 дней −10%, 30 дней −20%)</option><option>Без скидки</option><option>Своя сетка…</option></select></div>
+    </div>
+
+    <div class="fsec">
+      <div class="lab">Публикация</div>
+      <div class="sw"><div class="tx"><b>Показывать на сайте</b><span>Скрытые позиции не видны в каталоге и поиске. Наличие ведётся в 1С — на сайте не показывается</span></div><div class="tg on"></div></div>
+      <div class="sw"><div class="tx"><b>Хит проката</b><span>Попадёт в блок «Часто берут» на главной</span></div><div class="tg"></div></div>
+    </div>
+  </div>
+  <div class="dfoot">
+    <button class="btn pri">Сохранить</button>
+    <button class="btn ghost" onclick="document.body.classList.remove('open')">Отмена</button>
+    <button class="del">Удалить инструмент</button>
+  </div>
+</aside>
+</body>
+</html>

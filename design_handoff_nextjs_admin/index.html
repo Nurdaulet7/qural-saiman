@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>QURAL-SAIMAN — прокат инструмента</title>
+<meta name="theme-color" content="#FFFFFF">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Qural Saiman">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+<script>if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});</script>
+</head>
+<body>
+<div class="app">
+
+<div class="dtopbar">
+  <div class="dtop-info">
+    <span><i data-lucide="map-pin"></i>Шымкент, м-н Кайтпас-1, ул. Мустафы Шокая, 9а</span>
+    <span><i data-lucide="clock"></i>Пн–Пт 08:00–20:00 · Сб–Вс 08:00–17:00</span>
+    <span><i data-lucide="phone"></i>+7 705 780 2074</span>
+  </div>
+  <div class="dtop-lang"><button class="on" type="button">RU</button><button type="button">KZ</button></div>
+</div>
+
+<div class="appbar" id="appbar">
+  <div class="row">
+    <a href="index.html" class="brand" style="gap:5px">
+      <span class="mark"></span>
+      <span class="wm"><b>QURAL<i>–</i><u>SAIMAN</u></b><em>SERVICE</em></span>
+    </a>
+    <nav class="dnav">
+      <a href="index.html" class="on">Главная</a>
+      <a href="catalog.html">Каталог</a>
+      <a href="dgu.html">Генераторы</a>
+      <a href="terms.html">Условия</a>
+      <a href="responsibility.html">Ответственность</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+    <span class="spacer"></span>
+    <div class="dtools">
+      <button class="dicon dsearchbtn" type="button" data-search-open aria-label="Поиск"><i data-lucide="search"></i></button>
+      <a class="dicon dcart" href="cart.html" aria-label="Корзина"><i data-lucide="shopping-cart"></i><span class="dot" data-cart-dot>0</span></a>
+      <a class="dphone" href="tel:+77057802074"><i data-lucide="phone"></i>+7 705 780 2074</a>
+    </div>
+    <a class="iconbtn wa-btn" href="https://wa.me/77057802074" aria-label="WhatsApp"><svg class="wa" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></a>
+    <a class="iconbtn call" href="tel:+77057802074" aria-label="Позвонить"><i data-lucide="phone"></i></a>
+  </div>
+  <div class="searchwrap">
+    <button class="search" type="button" data-search-open>
+      <i data-lucide="search"></i>
+      <span>Перфоратор, виброплита, генератор…</span>
+    </button>
+  </div>
+</div>
+
+<div class="promo">
+  <h2>Инструмент<br />на любой срок</h2>
+  <p>Более 80 позиций на складе в Шымкенте. От одних суток, без залога.</p>
+  <div class="facts">
+    <span><i data-lucide="shield-check"></i>Без залога</span>
+    <span><i data-lucide="file-text"></i>Договор за 5 мин</span>
+    <span><i data-lucide="truck"></i>Доставка по городу</span>
+  </div>
+  <a class="go" href="catalog.html">Смотреть каталог <i data-lucide="arrow-right"></i></a>
+</div>
+
+<div class="sec">
+  <div class="sechead">
+    <div class="shl"><span class="eyebrow">Каталог</span><h2>Категории инструмента</h2></div>
+    <a href="catalog.html">Все<i data-lucide="chevron-right"></i></a>
+  </div>
+  <div class="cats" id="cats"></div>
+</div>
+
+<div class="sec">
+  <div class="sechead">
+    <div class="shl"><span class="eyebrow">Хиты аренды</span><h2>Часто берут</h2></div>
+    <div class="shr"><a href="catalog.html">Все<i data-lucide="chevron-right"></i></a></div>
+  </div>
+  <div class="rail" id="hits"></div>
+</div>
+
+<div class="sec">
+  <div class="sechead"><div class="shl"><span class="eyebrow">Просто</span><h2>Как арендовать</h2></div></div>
+  <div class="steps">
+    <div class="step">
+      <span class="shead"><span class="sico"><i data-lucide="search"></i></span><span class="n">1</span></span>
+      <div><b>Выбираете инструмент</b><p>В каталоге или по телефону — подскажем, что подойдёт под задачу.</p></div>
+    </div>
+    <div class="step">
+      <span class="shead"><span class="sico"><i data-lucide="file-text"></i></span><span class="n">2</span></span>
+      <div><b>Оформляем договор</b><p>Нужно только удостоверение личности. Залога нет — договор готов за 5 минут.</p></div>
+    </div>
+    <div class="step">
+      <span class="shead"><span class="sico"><i data-lucide="truck"></i></span><span class="n">3</span></span>
+      <div><b>Забираете или везём</b><p>Самовывоз со склада в Шымкенте либо доставка по городу.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sechead"><div class="shl"><span class="eyebrow">Самовывоз</span><h2>Где забрать</h2></div></div>
+  <div class="pickup">
+    <iframe class="pmap" title="Карта — QURAL-SAIMAN, Шымкент (2ГИС)" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://widgets.2gis.com/widget?type=firmsonmap&options=%7B%22pos%22%3A%7B%22lat%22%3A42.37441%2C%22lon%22%3A69.630777%2C%22zoom%22%3A16%7D%2C%22opt%22%3A%7B%22city%22%3A%22shymkent%22%7D%2C%22org%22%3A%2270000001084244728%22%7D"></iframe>
+  </div>
+  <div class="pinfo">
+      <b>ул. Мустафы Шокая, 9а</b>
+      <span class="addr">м-н Кайтпас-1, Каратауский р-н, Шымкент</span>
+      <span class="note">Заезд со стороны АЗС «Гелиос». Парковка на территории.</span>
+      <a class="route" href="https://go.2gis.com/xXvVd" target="_blank" rel="noopener"><i data-lucide="navigation"></i>Построить маршрут</a>
+  </div>
+  <div class="hours">
+    <span><i data-lucide="clock"></i>Пн–Пт 08:00–20:00</span>
+    <span><i data-lucide="clock"></i>Сб–Вс 08:00–17:00</span>
+  </div>
+  <div class="delivery">
+    <span class="dico"><i data-lucide="truck"></i></span>
+    <span class="dtext">
+      <b>Доставка по городу</b>
+      <span class="drow2"><span>До 5 км</span><em>от 1 500 ₸</em></span>
+      <span class="drow2"><span>Каждые следующие 5 км</span><em>+ 500 ₸</em></span>
+    </span>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sechead">
+    <div class="shl"><span class="eyebrow">Энергия на объект</span><h2>Дизельные генераторы</h2></div>
+    <a href="dgu.html">Все<i data-lucide="chevron-right"></i></a>
+  </div>
+  <p class="secsub">В кожухе, с АВР. Аренда на объект — сутки, месяц, сезон.</p>
+  <div class="dgu">
+    <div class="dguvis">
+      <span class="dgutag">50–240 кВт</span>
+      <b>Подберём генератор под нагрузку объекта</b>
+      <p>Привезём, подключим, обеспечим топливом и сервисом на весь срок аренды.</p>
+      <a class="dgulink" href="dgu.html">Все генераторы<i data-lucide="arrow-right"></i></a>
+    </div>
+    <div class="dlist" id="dguList"></div>
+  </div>
+</div>
+
+<div class="sec revsec">
+  <div class="sechead">
+    <div class="shl"><span class="eyebrow">Клиенты</span><h2>Отзывы</h2></div>
+    <a href="https://go.2gis.com/xXvVd" target="_blank" rel="noopener">В 2ГИС<i data-lucide="chevron-right"></i></a>
+  </div>
+  <div class="rail revrail" id="revRail">
+    <div class="revcard">
+      <span class="rhead">
+        <span class="av">МК</span>
+        <span class="who"><b>Макс Кравченко</b><span>5 сентября 2025</span></span>
+      </span>
+      <p>Каждый раз благодарен за предоставленный инструмент, ( вежливые сотрудники ) лучшие условия и цены , всем советую</p>
+    </div>
+    <div class="revcard">
+      <span class="rhead">
+        <span class="av">DL</span>
+        <span class="who"><b>Danil LD</b><span>6 октября 2025</span></span>
+      </span>
+      <p>Очень хорошая компания. Пользуюсь их ними услугами не первый год. Инструмент всегда чистый, в отличном рабочем состоянии! Лояльные цены и что самые важное имеется доставка!</p>
+    </div>
+    <div class="revcard">
+      <span class="rhead">
+        <span class="av">ZA</span>
+        <span class="who"><b>Zahida Ashurmetova</b><span>17 января 2026</span></span>
+      </span>
+      <p>Хороший сервис, хорошее оборудование. Берем не в первый раз, всегда выручают. У них есть аппараты для безвоздушного нанесения хорошей краски для стен, всегда обращаемся. Спасибо!</p>
+    </div>
+    <div class="revcard">
+      <span class="rhead">
+        <span class="av">АТ</span>
+        <span class="who"><b>Аслан Турсынов</b><span>28 февраля 2026</span></span>
+      </span>
+      <p>Брал виброплиту и отбойник на выходные. Всё готово к моему приезду, объяснили как работать. Вернул вечером — приняли без придирок.</p>
+    </div>
+    <div class="revcard">
+      <span class="rhead">
+        <span class="av">ЕП</span>
+        <span class="who"><b>Елена Панченко</b><span>14 марта 2026</span></span>
+      </span>
+      <p>Заказывала штроборез с доставкой на Кайтпас. Привезли в тот же день, инструмент как новый. Очень удобно, что можно продлить аренду по телефону.</p>
+    </div>
+    <div class="revcard">
+      <span class="rhead">
+        <span class="av">СБ</span>
+        <span class="who"><b>Сергей Бондарь</b><span>2 апреля 2026</span></span>
+      </span>
+      <p>Работаем на объекте, генератор 120 кВт держал две недели без перебоев. Топливо и сервис — по договорённости, всё вовремя.</p>
+    </div>
+    <div class="revcard">
+      <span class="rhead">
+        <span class="av">НК</span>
+        <span class="who"><b>Нурлан Касымов</b><span>19 мая 2026</span></span>
+      </span>
+      <p>Цены честные, депозит вернули полностью. Ребята подсказали, какой перфоратор лучше под бетон — сэкономил и время, и деньги.</p>
+    </div>
+    <a class="revmore" href="https://go.2gis.com/xXvVd" target="_blank" rel="noopener">
+      <span class="rmark">2ГИС</span>
+      <span class="revrate"><b>Отзывы клиентов</b><span class="revstars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></span></span>
+      <span class="revcount">Читайте оценки и оставьте свою в карточке 2ГИС</span>
+      <span class="revgo">Все отзывы<i data-lucide="arrow-up-right"></i></span>
+    </a>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="contact">
+    <div class="ctext">
+      <h2>Нужен совет?</h2>
+      <p>Скажите, что за работа — подберём инструмент и посчитаем стоимость аренды.</p>
+    </div>
+    <div class="btns">
+      <a class="btn btn-primary" href="tel:+77057802074"><i data-lucide="phone"></i>+7 705 780 2074</a>
+      <a class="btn btn-ghost" href="https://wa.me/77057802074"><svg class="wa" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>Написать в WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<footer class="dfooter">
+  <div class="dfoot-col">
+    <span class="dfoot-brand"><span class="dfmark"></span><span class="wm"><b>QURAL<i>–</i><u>SAIMAN</u></b><em>SERVICE</em></span></span>
+    <p>Прокат строительного инструмента в Шымкенте. Более 80 позиций на складе, без залога.</p>
+    <div class="dfoot-social">
+      <a href="https://wa.me/77057802074" aria-label="WhatsApp"><svg class="wa" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></a>
+      <a href="https://go.2gis.com/xXvVd" target="_blank" rel="noopener" aria-label="2ГИС"><i data-lucide="map-pin"></i></a>
+    </div>
+  </div>
+  <div class="dfoot-col">
+    <b>Навигация</b>
+    <a href="index.html">Главная</a>
+    <a href="catalog.html">Каталог</a>
+    <a href="dgu.html">Дизель-генераторы</a>
+    <a href="cart.html">Корзина</a>
+  </div>
+  <div class="dfoot-col">
+    <b>Информация</b>
+    <a href="delivery.html">Доставка</a>
+    <a href="payment.html">Оплата</a>
+    <a href="terms.html">Условия аренды</a>
+    <a href="faq.html">Вопросы</a>
+  </div>
+  <div class="dfoot-col">
+    <b>Контакты</b>
+    <a class="dfoot-phone" href="tel:+77057802074"><i data-lucide="phone"></i>+7 705 780 2074</a>
+    <span><i data-lucide="map-pin"></i>ул. Мустафы Шокая, 9а, Шымкент</span>
+    <span><i data-lucide="clock"></i>Пн–Пт 08:00–20:00 · Сб–Вс 08:00–17:00</span>
+  </div>
+  <div class="dfoot-bottom">
+    <span>© 2026 QURAL-SAIMAN · Прокат инструмента, Шымкент</span>
+    <div class="dfoot-legal">
+      <a href="privacy.html">Конфиденциальность</a>
+      <a href="terms.html">Условия аренды</a>
+      <a href="return.html">Возврат</a>
+    </div>
+  </div>
+</footer>
+
+<nav class="tabs">
+  <a class="tab on" href="index.html"><span class="icwrap"><i data-lucide="home"></i></span><span>Главная</span></a>
+  <a class="tab" href="catalog.html"><span class="icwrap"><i data-lucide="layout-grid"></i></span><span>Каталог</span></a>
+  <a class="tab" href="contacts.html"><span class="icwrap"><i data-lucide="map-pin"></i></span><span>Контакты</span></a>
+  <a class="tab" href="cart.html"><span class="icwrap"><i data-lucide="shopping-cart"></i><span class="dot" data-cart-dot>0</span></span><span>Корзина</span></a>
+  <a class="tab" href="info.html"><span class="icwrap"><i data-lucide="menu"></i></span><span>Ещё</span></a>
+</nav>
+
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<script src="tools-data.js"></script>
+<script src="cat-icons.js"></script>
+<script src="app-cart.js"></script>
+<div class="dfab" id="dfab" aria-hidden="true">
+  <a class="dfab-item wa" href="https://wa.me/77057802074" target="_blank" rel="noopener"><span class="dfab-lbl">Написать в WhatsApp</span><span class="dfab-ico"><svg class="wa" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.171.199-.343.212-.641.075-.297-.135-1.24-.404-2.36-1.404-1.017-.884-1.397-1.585-1.612-1.883-.213-.298-.02-.469.13-.618.13-.129.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.05-.52-.099-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.375a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></span></a>
+  <button type="button" class="dfab-item cb" id="dfabCall"><span class="dfab-lbl">Перезвоните мне</span><span class="dfab-ico"><i data-lucide="phone-call"></i></span></button>
+</div>
+<script src="callback-widget.js"></script>
+<script src="app-search.js" defer></script>
+<script>
+(function(){
+  var QS = window.QS || {};
+
+  var plural = function(n,a,b,c){var m=n%100,d=n%10;return n+' '+(m>=11&&m<=14?c:d===1?a:d>=2&&d<=4?b:c)};
+  var TILES = ['demolition','concrete-work','plates','gen-petrol','angle-grinders','saws','power-tools','towers'];
+  var cats = document.getElementById('cats');
+  var ORDER = TILES.concat((QS.categories||[]).map(function(c){return c.id}).filter(function(id){return TILES.indexOf(id)<0}));
+  ORDER.forEach(function(id){
+    var c = (QS.categories||[]).find(function(x){return x.id===id});
+    if(!c) return;
+    var a = document.createElement('a');
+    a.className = 'cat';
+    a.href = 'catalog.html#' + c.id;
+    a.innerHTML = '<span class="ic">'+QS.catIcon(c.id,c.icon)+'</span><span class="ctx"><span class="cnm"><span class="cnfull">'+c.name+'</span><span class="cnshort">'+(c.short||c.name)+'</span></span><span class="ccnt">'+plural((QS.tools||[]).filter(function(t){return t.cat===c.id}).length,'позиция','позиции','позиций')+'</span></span><i data-lucide="arrow-up-right" class="carr"></i>';
+    cats.appendChild(a);
+  });
+  var all = document.createElement('a');
+  all.className = 'cat catall';
+  all.href = 'catalog.html';
+  all.innerHTML = '<span class="ctx"><span class="cnm">Весь каталог</span><span class="ccnt">'+plural((QS.categories||[]).length,'категория','категории','категорий')+' · '+plural((QS.tools||[]).length,'позиция','позиции','позиций')+'</span></span><i data-lucide="arrow-right"></i>';
+  cats.appendChild(all);
+
+  var hits = document.getElementById('hits');  var w = function(t){ return (t.badge==='hit'?2:0) + (t.top?1:0) };
+  var pool = (QS.tools||[]).filter(function(t){ return t.badge==='hit' || t.top });
+  pool.sort(function(x,y){ return w(y)-w(x) || x.price-y.price });
+  pool.slice(0,10).forEach(function(t){
+    var a = document.createElement('a');
+    a.className = 'card';
+    a.href = 'product.html?id=' + t.id;
+    a.innerHTML =
+      '<div class="ph">' + (t.badge==='hit' ? '<span class="badge">хит</span>' : '') +
+        (QS.hasPhoto(t.id) ? '<img src="'+QS.photo(t.id)+'" alt="" loading="lazy" />' : '<span class="noph"></span>') +
+        '<button class="fav" type="button" data-fav="'+t.id+'" aria-label="В избранное"><i data-lucide="heart"></i></button>'+
+      '</div>' +
+      '<div class="body">' +
+        '<span class="ctag">'+((QS.categories||[]).filter(function(c){return c.id===t.cat})[0]||{}).name+'</span>' +
+        '<span class="nm">'+t.name+'</span>' +
+        '<span class="foot">' +
+          '<span class="pr">'+(t.priceNote?'от ':'')+QS.fmt(t.price)+'<small>в сутки</small></span>' +
+          '<span class="plus"><i data-lucide="plus"></i></span>' +
+        '</span>' +
+      '</div>';
+    hits.appendChild(a);
+  });
+
+  var dguList = document.getElementById('dguList');
+  [
+    {kw:50,  note:'Небольшой объект, бытовки, освещение'},
+    {kw:80,  note:'Сварка, бетономешалка, ручной инструмент'},
+    {kw:120, note:'Стройплощадка среднего размера'},
+    {kw:200, note:'Башенный кран, несколько бригад'},
+    {kw:240, note:'Резерв объекта, непрерывное питание'}
+  ].forEach(function(g){
+    var a = document.createElement('a');
+    a.className = 'drow';
+    a.href = 'dgu.html';
+    a.innerHTML =
+      '<span class="dkw">'+g.kw+'<small>кВт</small></span>' +
+      '<span class="dtxt"><b>Дизельный генератор</b><span>'+g.note+'</span></span>' +
+      '<i data-lucide="chevron-right"></i>';
+    dguList.appendChild(a);
+  });
+
+  if(window.QSCart) QSCart.syncBadge();
+
+  /* «+» на карточке — в корзину */
+  var toast=function(msg){
+    var el=document.createElement('div'); el.className='toast'; el.textContent=msg;
+    document.body.appendChild(el);
+    requestAnimationFrame(function(){ el.classList.add('on') });
+    setTimeout(function(){ el.classList.remove('on'); setTimeout(function(){ el.remove() },250) },1700);
+  };
+
+  document.addEventListener('click', function(e){
+    var b=e.target.closest('[data-fav]'); if(!b) return;
+    e.preventDefault(); e.stopPropagation();
+    if(!window.QSFav) return;
+    var on=QSFav.toggle(b.getAttribute('data-fav'));
+    b.classList.toggle('on', on);
+    toast(on?'Добавлено в избранное':'Убрано из избранного');
+  });
+  document.addEventListener('click', function(e){
+    var p=e.target.closest('.card .plus'); if(!p) return;
+    var card=p.closest('.card'); if(!card) return;
+    e.preventDefault(); e.stopPropagation();
+    var id=(card.getAttribute('href')||'').split('id=')[1];
+    if(!id||!window.QSCart) return;
+    QSCart.add(id,1);
+    p.classList.add('done'); setTimeout(function(){ p.classList.remove('done') },900);
+    toast('Добавлено в корзину');
+  });
+
+
+  /* плавающие контакты (десктоп) */
+  (function(){
+    var fab=document.getElementById('dfab'); if(!fab) return;
+    var upd=function(){fab.classList.toggle('on',scrollY>420)};
+    addEventListener('scroll',upd,{passive:true}); upd();
+    document.getElementById('dfabCall').addEventListener('click',function(){
+      if(window.QSCallback&&QSCallback.open){QSCallback.open(true);return}
+      location.href='tel:+77057802074';
+    });
+  })();
+
+  /* авто-карусель отзывов */
+  (function(){
+    var rail=document.getElementById('revRail'); if(!rail) return;
+    var half=0, hold=0;
+    function clone(){
+      if(rail.dataset.cloned) return;
+      Array.prototype.slice.call(rail.children).forEach(function(n){var c=n.cloneNode(true);c.setAttribute('aria-hidden','true');c.classList.add('revclone');rail.appendChild(c)});
+      rail.dataset.cloned='1';
+      if(window.lucide) lucide.createIcons();
+    }
+    function pause(ms){hold=Date.now()+(ms||1400)}
+    ['pointerdown','touchstart','wheel'].forEach(function(ev){rail.addEventListener(ev,function(){pause(1600)},{passive:true})});
+    setInterval(function(){
+      if(getComputedStyle(rail).overflowX!=='auto') return;
+      clone();
+      half=rail.scrollWidth/2;
+      if(Date.now()<hold||rail.classList.contains('dragging')) return;
+      if(rail.scrollLeft>=half) rail.scrollLeft-=half;
+      rail.scrollLeft+=.6;
+    },16);
+  })();
+
+  document.querySelectorAll('.rail:not(#revRail)').forEach(function(rail){
+    var sec=rail.closest('.sec'); if(!sec) return;
+    var scrollable=function(){return getComputedStyle(rail).overflowX==='auto' && rail.scrollWidth>rail.clientWidth+1};
+    var anim=function(to){
+      var from=rail.scrollLeft, d=to-from, t0=performance.now();
+      var step=function(t){
+        var p=Math.min(1,(t-t0)/320), e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+        rail.scrollLeft=from+d*e; if(p<1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    var navs=[];
+    ['l','r'].forEach(function(side){
+      var dir=side==='r'?1:-1;
+      var w=document.createElement('div'); w.className='railnav '+side;
+      w.innerHTML='<button type="button" aria-label="'+(dir>0?'Вперёд':'Назад')+'"><i data-lucide="chevron-'+(dir>0?'right':'left')+'"></i></button>';
+      sec.appendChild(w); navs.push(w);
+      var b=w.querySelector('button');
+      b.addEventListener('click',function(){
+        var c=rail.querySelector('.card,.revcard');
+        anim(rail.scrollLeft+dir*((c?c.getBoundingClientRect().width+18:400)*2));
+      });
+      w._sync=function(){var max=rail.scrollWidth-rail.clientWidth-2;b.disabled=dir<0?rail.scrollLeft<=2:rail.scrollLeft>=max};
+    });
+    var sync=function(){
+      var on=scrollable();
+      sec.classList.toggle('hasrail',on);
+      rail.classList.toggle('scrollable',on);
+      navs.forEach(function(w){w.style.display=on?'':'none'; w._sync()});
+      if(navs[0]){
+        var top=rail.offsetTop+14, h=rail.clientHeight-48;
+        navs.forEach(function(w){w.style.top=top+'px';w.style.height=h+'px'});
+      }
+    };
+    rail.addEventListener('scroll',sync); window.addEventListener('resize',sync); setTimeout(sync,80);
+    var down=false,sx=0,sl=0,moved=0;
+    rail.addEventListener('pointerdown',function(e){if(e.button!==0||!scrollable()||e.pointerType!=='mouse')return;down=true;moved=0;sx=e.clientX;sl=rail.scrollLeft;rail.classList.add('dragging')});
+    window.addEventListener('pointermove',function(e){if(!down)return;var d=e.clientX-sx;moved=Math.abs(d);rail.scrollLeft=sl-d});
+    window.addEventListener('pointerup',function(){if(!down)return;down=false;rail.classList.remove('dragging')});
+    rail.addEventListener('click',function(e){if(moved>6){e.preventDefault();e.stopPropagation()}},true);
+  });
+
+  var bar = document.getElementById('appbar');
+  var onScroll = function(){ bar.classList.toggle('stuck', window.scrollY > 4) };
+  addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  if(window.lucide) lucide.createIcons();
+})();
+</script>
+</body>
+</html>

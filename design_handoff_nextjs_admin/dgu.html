@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Дизельные генераторы ДГУ — QURAL-SAIMAN</title>
+<meta name="theme-color" content="#FFFFFF">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+<script>if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});</script>
+<style>
+.dgpromo{background-image:linear-gradient(180deg,rgba(20,18,16,.30),rgba(20,18,16,.88)),url("assets/dgu-hero.jpg")}
+.dglist{padding:18px 18px 4px;display:flex;flex-direction:column;gap:11px}
+.dgcard{display:flex;gap:13px;padding:14px;border-radius:var(--r-lg);border:1px solid var(--line)}
+.dgcard .ph{flex-shrink:0;width:64px;height:64px;border-radius:12px;background:var(--bg-soft);display:grid;place-items:center;overflow:hidden}
+.dgcard .ph img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.dgcard .dtx{flex:1;min-width:0}
+.dgcard .dtx .kwtag{display:inline-block;font-size:10.5px;font-weight:800;color:var(--orange-dark);background:var(--orange-soft);padding:2px 7px;border-radius:6px;margin-bottom:5px}
+.dgcard .dtx b{display:block;font-size:14px;font-weight:700;letter-spacing:-.01em;text-wrap:pretty}
+.dgcard .dtx span{display:block;font-size:11.5px;color:var(--muted);margin-top:3px;text-wrap:pretty}
+.dgcard .dfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:9px}
+.dgcard .dpr{font-size:15px;font-weight:800;letter-spacing:-.02em}
+.dgcard .dpr small{font-size:11px;font-weight:600;color:var(--muted);margin-left:3px}
+.dgcard .dcall{display:flex;align-items:center;gap:6px;height:34px;padding:0 12px;border-radius:10px;background:var(--orange);color:#fff;font-size:12.5px;font-weight:700}
+.dgcard .dcall svg{width:15px;height:15px;flex-shrink:0}
+.dgnote{margin:14px 18px 0;font-size:12px;line-height:1.55;color:var(--muted);text-wrap:pretty}
+.dgsec{margin-top:26px}
+.dgsechead{padding:0 18px 10px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2)}
+.dgrow{display:flex;gap:12px;padding:13px 18px;border-top:1px solid var(--line)}
+.dgrow:first-child{border-top:0}
+.dgrow .di{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;flex-shrink:0}
+.dgrow .di svg{width:18px;height:18px}
+.dgrow.yes .di{background:var(--orange-soft);color:var(--orange)}
+.dgrow.maybe .di{background:var(--bg-soft);color:var(--muted)}
+.dgrow b{display:block;font-size:13.5px;font-weight:700}
+.dgrow p{font-size:12px;color:var(--muted);line-height:1.5;margin-top:3px;text-wrap:pretty}
+.dgrow .tag2{display:inline-block;margin-top:6px;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:6px}
+.dgrow.yes .tag2{background:var(--orange-soft);color:var(--orange-dark)}
+.dgrow.maybe .tag2{background:var(--bg-soft);color:var(--muted)}
+#pRelated{padding-bottom:24px}
+
+/* ===== DGU: DESKTOP / TABLET ===== */
+@media (min-width:900px){
+  .catbar .cnt{display:none}
+  .dgpromo{margin:28px 32px 56px}
+  .dgpromo h2{max-width:15ch}
+  .dgpromo .facts{max-width:560px}
+  .dgwrap{margin:0 32px;padding:36px 0 44px;display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:0 30px;align-items:start}
+  .dgsechead{grid-column:1;padding:0 0 14px!important;font-size:11px;letter-spacing:.12em}
+  .dglist{grid-column:1;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .dgcard{padding:18px;border-radius:20px;transition:border-color var(--t),transform var(--t),box-shadow var(--t)}
+  .dgcard:hover{border-color:var(--orange);transform:translateY(-2px);box-shadow:0 18px 34px -24px rgba(30,26,20,.5)}
+  .dgcard .ph{width:86px;height:86px;border-radius:14px}
+  .dgcard .dtx{display:flex;flex-direction:column}
+  .dgcard .dtx .kwtag{align-self:flex-start}
+  .dgcard .dtx b{font-size:15.5px}
+  .dgcard .dtx span{font-size:12.5px}
+  .dgcard .dfoot{margin-top:auto;padding-top:9px}
+  .dgcard .dpr{font-size:17px}
+  .dgcard .dcall{height:38px;padding:0 14px;font-size:13px;border-radius:11px;transition:background var(--t)}
+  .dgcard .dcall:hover{background:var(--orange-dark)}
+  .dgnote{grid-column:1;margin:16px 0 0;font-size:12.5px;max-width:78ch}
+  .dgsec{grid-column:2;grid-row:1/span 6;margin-top:0;align-self:start;position:sticky;top:96px;border:1px solid var(--line);border-radius:20px;padding:22px 24px;background:var(--bg-soft)}
+  .dgsec .dgsechead{grid-column:auto;padding:0 0 4px!important}
+  .dgrow{padding:14px 0;gap:13px}
+  .dgrow:first-child{border-top:1px solid var(--line)}
+  .dgrow .di{width:36px;height:36px}
+  .dgrow b{font-size:13.5px}
+  .dgrow p{font-size:12px}
+  .dgwrap>.dgnote:last-child{grid-column:1}
+  .cbslotwrap{grid-column:1;margin:26px 0 0;padding:26px 28px;border-radius:20px;width:auto}
+  .cbslotwrap>div{max-width:none}
+  .dgpromo,.dglist,.dgsec,.cbslotwrap{animation:dgin .4s ease both}
+  .dglist{animation-delay:.06s}
+  .dgsec{animation-delay:.1s}
+  .cbslotwrap{animation-delay:.14s}
+  @keyframes dgin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){
+  .dgpromo,.dglist,.dgsec,.cbslotwrap{animation:none}
+  .dgcard:hover{transform:none}
+}
+@media (max-width:599px){
+  .dglist{padding:14px 14px 4px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+  .dgcard{display:flex;flex-direction:column;padding:0;overflow:hidden;border-radius:var(--r)}
+  .dgcard .ph{width:100%;height:auto;aspect-ratio:1/1;border-radius:0;padding:10px;box-sizing:border-box;background:var(--bg-soft)}
+  .dgcard .dtx{display:flex;flex-direction:column;flex:1;padding:12px 13px 13px}
+  .dgcard .dtx .kwtag{align-self:flex-start;margin-bottom:5px}
+  .dgcard .dtx b{font-size:14px}
+  .dgcard .dtx>span:not(.kwtag){display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .dgcard .dfoot{flex-direction:column;align-items:stretch;gap:8px;margin-top:auto;padding-top:10px}
+  .dgcard .dpr{font-size:15px}
+  .dgcard .dcall{height:38px;justify-content:center;padding:0 10px;font-size:12.5px;border-radius:10px}
+}
+@media (min-width:600px) and (max-width:899px){
+  .dglist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+  .dgcard{flex-direction:column}
+  .dgcard .ph{width:100%;height:110px}
+  .dgcard .dtx{display:flex;flex-direction:column}
+  .dgcard .dtx .kwtag{align-self:flex-start}
+  .dgcard .dfoot{margin-top:auto;padding-top:9px}
+  .dgsec .dgrow{padding:13px 18px}
+}
+@media (min-width:900px) and (max-width:1099px){
+  .dgpromo{margin:20px 24px 36px;padding:36px 32px;min-height:0}
+  .dgwrap{margin:0 24px;padding-top:28px;grid-template-columns:minmax(0,1fr);gap:0}
+  .dglist{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .dgsec{grid-column:1;grid-row:auto;position:static;top:auto;margin-top:26px}
+  .cbslotwrap{grid-column:1;margin:22px 0 0;padding:20px 22px;width:auto}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="appbar catbar" id="appbar">
+  <div class="row">
+    <a class="iconbtn back" href="catalog.html" aria-label="Назад"><i data-lucide="arrow-left"></i></a>
+    <h1 class="cattitle">Дизельные генераторы</h1>
+    <a href="index.html" class="brand" style="gap:5px">
+      <span class="mark"></span>
+      <span class="wm"><b>QURAL<i>–</i><u>SAIMAN</u></b><em>SERVICE</em></span>
+    </a>
+    <nav class="dnav">
+      <a href="index.html">Главная</a>
+      <a href="catalog.html">Каталог</a>
+      <a class="on" href="dgu.html">Генераторы</a>
+      <a href="terms.html">Условия</a>
+      <a href="responsibility.html">Ответственность</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="iconbtn call" href="tel:+77057802074" aria-label="Позвонить"><i data-lucide="phone"></i></a>
+    <div class="dtools">
+      <a class="dicon dcart" href="cart.html" aria-label="Корзина"><i data-lucide="shopping-cart"></i><span class="dot" data-cart-dot>0</span></a>
+      <a class="dphone" href="tel:+77057802074"><i data-lucide="phone"></i>+7 705 780 2074</a>
+    </div>
+  </div>
+</div>
+
+<div class="promo dgpromo">
+  <span class="tag">Промышленное оборудование</span>
+  <h2>Дизельные генераторы<br />50–240 кВт</h2>
+  <p>Для строек, объектов и аварийного резерва. Сдаём посуточно по договору — цена за станцию.</p>
+  <div class="facts">
+    <span><i data-lucide="banknote"></i>от 60 000 ₸/сутки</span>
+    <span><i data-lucide="timer"></i>от 1 суток</span>
+    <span><i data-lucide="percent"></i>скидка на долгий срок</span>
+  </div>
+  <a class="go" href="https://wa.me/77057802074?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9D%D1%83%D0%B6%D0%B5%D0%BD%20%D0%B4%D0%B8%D0%B7%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D0%B3%D0%B5%D0%BD%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80%20%E2%80%94%20%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%B8%D1%82%D0%B5%20%D0%BF%D0%BE%D0%B4%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D1%8C%20%D0%BC%D0%BE%D1%89%D0%BD%D0%BE%D1%81%D1%82%D1%8C." target="_blank" rel="noopener">Подобрать мощность<i data-lucide="arrow-right"></i></a>
+</div>
+
+<div class="dgwrap">
+<div class="dgsechead" style="padding-top:20px">Парк станций</div>
+<div class="dglist" id="dgList"></div>
+<p class="dgnote">Цена — за саму станцию, минимум 1 сутки, 100% предоплата по договору. Парк пополняется — если нужной мощности нет в списке, позвоните.</p>
+
+<div class="dgsec">
+  <div class="dgsechead">Как проходит аренда</div>
+  <div class="dgrow yes">
+    <span class="di"><i data-lucide="file-signature"></i></span>
+    <div><b>Аренда станции</b><p>Сдаём ДГУ посуточно по договору. Цена в списке — за саму станцию. Минимум 1 сутки, 100% предоплата.</p><span class="tag2">Наша услуга</span></div>
+  </div>
+  <div class="dgrow maybe">
+    <span class="di"><i data-lucide="truck"></i></span>
+    <div><b>Доставка</b><p>Своей службы доставки нет. Поможем организовать манипулятором — согласуем подачу и время. Оплачивается отдельно.</p><span class="tag2">По договорённости</span></div>
+  </div>
+  <div class="dgrow maybe">
+    <span class="di"><i data-lucide="fuel"></i></span>
+    <div><b>Топливо и заправка</b><p>Заправка дизтопливом — на стороне арендатора. В стоимость аренды топливо не входит.</p><span class="tag2">Не входит</span></div>
+  </div>
+  <div class="dgrow maybe">
+    <span class="di"><i data-lucide="user-cog"></i></span>
+    <div><b>Запуск и контроль работы</b><p>Постоянного оператора мы не ведём. Иногда можем помочь — за отдельную плату и по возможности.</p><span class="tag2">Не всегда</span></div>
+  </div>
+</div>
+<p class="dgnote">Чтобы не было сюрпризов — вопросы по доставке, запуску и топливу обсудим заранее, при оформлении заявки.</p>
+
+<div class="cbslotwrap">
+  <b>Нужен генератор на объект?</b>
+  <span>Оставьте номер — подберём мощность под нагрузку и назовём точную цену</span>
+  <div id="callbackSlot"></div>
+
+</div>
+
+
+</div>
+
+<footer class="dfooter">
+  <div class="dfoot-col">
+    <span class="dfoot-brand"><span class="dfmark"></span><span class="wm"><b>QURAL<i>–</i><u>SAIMAN</u></b><em>SERVICE</em></span></span>
+    <p>Прокат строительного инструмента в Шымкенте. Более 80 позиций на складе, без залога.</p>
+  </div>
+  <div class="dfoot-col">
+    <b>Навигация</b>
+    <a href="index.html">Главная</a>
+    <a href="catalog.html">Каталог</a>
+    <a href="dgu.html">Дизель-генераторы</a>
+    <a href="cart.html">Корзина</a>
+  </div>
+  <div class="dfoot-col">
+    <b>Информация</b>
+    <a href="delivery.html">Доставка</a>
+    <a href="payment.html">Оплата</a>
+    <a href="terms.html">Условия аренды</a>
+    <a href="faq.html">Вопросы</a>
+  </div>
+  <div class="dfoot-col">
+    <b>Контакты</b>
+    <a class="dfoot-phone" href="tel:+77057802074"><i data-lucide="phone"></i>+7 705 780 2074</a>
+    <span><i data-lucide="map-pin"></i>ул. Мустафы Шокая, 9а, Шымкент</span>
+    <span><i data-lucide="clock"></i>Пн–Пт 08:00–20:00 · Сб–Вс 08:00–17:00</span>
+  </div>
+  <div class="dfoot-bottom">
+    <span>© 2026 QURAL-SAIMAN · Прокат инструмента, Шымкент</span>
+    <div class="dfoot-legal">
+      <a href="privacy.html">Конфиденциальность</a>
+      <a href="terms.html">Условия аренды</a>
+      <a href="return.html">Возврат</a>
+    </div>
+  </div>
+</footer>
+</div>
+
+<nav class="tabs">
+  <a class="tab" href="index.html"><span class="icwrap"><i data-lucide="home"></i></span><span>Главная</span></a>
+  <a class="tab on" href="catalog.html"><span class="icwrap"><i data-lucide="layout-grid"></i></span><span>Каталог</span></a>
+  <a class="tab" href="contacts.html"><span class="icwrap"><i data-lucide="map-pin"></i></span><span>Контакты</span></a>
+  <a class="tab" href="cart.html"><span class="icwrap"><i data-lucide="shopping-cart"></i><span class="dot" data-cart-dot>0</span></span><span>Корзина</span></a>
+  <a class="tab" href="info.html"><span class="icwrap"><i data-lucide="menu"></i></span><span>Ещё</span></a>
+</nav>
+
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<script src="tools-data.js"></script>
+<script src="cat-icons.js"></script>
+<script src="app-cart.js"></script>
+<script src="callback-widget.js"></script>
+<script>
+(function(){
+  var QS=window.QS, C=window.QSCart;
+  var icons=function(){ if(window.lucide) lucide.createIcons() };
+  var list=(QS.dgu||[]).slice().sort(function(a,b){ return a.price-b.price });
+  var wrap=document.getElementById('dgList');
+
+  var render=function(){
+    wrap.innerHTML=list.map(function(g){
+      var img='assets/tools/'+g.photo;
+      return '<div class="dgcard" data-id="'+g.id+'">'+
+        '<span class="ph"><img src="'+img+'" alt="" /></span>'+
+        '<div class="dtx"><span class="kwtag">'+g.power+'</span><b>'+g.name.replace('Дизельный генератор ','')+'</b><span>'+g.note+'</span>'+
+        '<div class="dfoot"><span class="dpr">'+QS.fmt(g.price)+'<small>/сутки</small></span>'+
+        '<a class="dcall" href="https://wa.me/77057802074?text='+encodeURIComponent('Здравствуйте! Интересует аренда: '+g.name+' ('+g.power+')')+'" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" fill="currentColor"><path d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732 0.737 5.291 2.022 7.491l-0.038-0.070-2.109 7.702 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h0.006c8.209-0.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507l0 0zM16.062 28.228h-0.005c-0 0-0.001 0-0.001 0-2.319 0-4.489-0.64-6.342-1.753l0.056 0.031-0.451-0.267-4.675 1.227 1.247-4.559-0.294-0.467c-1.185-1.862-1.889-4.131-1.889-6.565 0-6.822 5.531-12.353 12.353-12.353s12.353 5.531 12.353 12.353c0 6.822-5.53 12.353-12.353 12.353h-0zM22.838 18.977c-0.371-0.186-2.197-1.083-2.537-1.208-0.341-0.124-0.589-0.185-0.837 0.187-0.246 0.371-0.958 1.207-1.175 1.455-0.216 0.249-0.434 0.279-0.805 0.094-1.15-0.466-2.138-1.087-2.997-1.852l0.010 0.009c-0.799-0.74-1.484-1.587-2.037-2.521l-0.028-0.052c-0.216-0.371-0.023-0.572 0.162-0.757 0.167-0.166 0.372-0.434 0.557-0.65 0.146-0.179 0.271-0.384 0.366-0.604l0.006-0.017c0.043-0.087 0.068-0.188 0.068-0.296 0-0.131-0.037-0.253-0.101-0.357l0.002 0.003c-0.094-0.186-0.836-2.014-1.145-2.758-0.302-0.724-0.609-0.625-0.836-0.637-0.216-0.010-0.464-0.012-0.712-0.012-0.395 0.010-0.746 0.188-0.988 0.463l-0.001 0.002c-0.802 0.761-1.3 1.834-1.3 3.023 0 0.026 0 0.053 0.001 0.079l-0-0.004c0.131 1.467 0.681 2.784 1.527 3.857l-0.012-0.015c1.604 2.379 3.742 4.282 6.251 5.564l0.094 0.043c0.548 0.248 1.25 0.513 1.968 0.74l0.149 0.041c0.442 0.14 0.951 0.221 1.479 0.221 0.303 0 0.601-0.027 0.889-0.078l-0.031 0.004c1.069-0.223 1.956-0.868 2.497-1.749l0.009-0.017c0.165-0.366 0.261-0.793 0.261-1.242 0-0.185-0.016-0.366-0.047-0.542l0.003 0.019c-0.092-0.155-0.34-0.247-0.712-0.434z"></path></svg>Уточнить</a>'+
+        '</div></div></div>';
+    }).join('');
+    icons();
+  };
+  var bar=document.getElementById('appbar');
+  addEventListener('scroll', function(){ bar.classList.toggle('stuck', scrollY>4) }, {passive:true});
+
+  render();
+})();
+</script>
+</body>
+</html>
