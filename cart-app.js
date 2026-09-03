@@ -4,7 +4,7 @@
   if(!QS||!C) return;
   var icons=function(){ if(window.lucide) lucide.createIcons() };
   var $=function(id){ return document.getElementById(id) };
-  var PRESETS=[1,3,7,30];
+
   var MON=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
   var WD=['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
 
@@ -14,6 +14,9 @@
     return s.replace(/(\d+)\s*трап\S*/g, function(m,n){ return n+' '+plural(+n,'трап','трапа','трапов') });
   };
   var dayWord=function(n){ return plural(n,'сутки','суток','суток') };
+  /* Ходовые сроки — единый список для общего контроля и для строк корзины.
+     Всё остальное вводится числом в поле «Сколько суток». */
+  var PRESET_DAYS=[1,3,6,7,30];
   var fmt=function(n){ return Number(n).toLocaleString('ru-RU').replace(/,/g,' ')+' ₸' };
   var shift=function(from,days){ var d=new Date(from); d.setDate(d.getDate()+days); return d };
 
@@ -33,24 +36,52 @@
         '<div class="stx"><b>'+t.name+(it.cfgLabel?' <em class="scfg">· '+fixCfg(it.cfgLabel)+'</em>':'')+'</b>'+
           '<span>'+(price==null?'цена по запросу':pre+fmt(price)+' / сутки')+'</span>'+
           '<button class="sterm'+(own?' own':'')+'" type="button" data-term>'+
-            '<i data-lucide="calendar-days"></i>'+days+' '+dayWord(days)+
+            '<i data-lucide="calendar-days"></i>'+
+            '<i class="src">'+(own?'Свой срок':'Как в корзине')+'</i>'+
+            days+' '+dayWord(days)+
             (free>0?' <em>+'+free+' в подарок</em>':'')+
             '<i data-lucide="chevron-down" class="cv"></i></button>'+
         '</div>'+
         '<div class="sright">'+
           '<span class="ssum">'+(sum==null?'—':pre+fmt(sum))+'</span>'+
-          '<div class="stepper"><button type="button" data-dec aria-label="Меньше">−</button><b>'+it.qty+'</b>'+
-            '<button type="button" data-inc aria-label="Больше">+</button></div>'+
+          '<div class="srow-acts">'+
+            '<div class="stepper"><button type="button" data-dec aria-label="Меньше">−</button><b>'+it.qty+'</b>'+
+              '<button type="button" data-inc aria-label="Больше">+</button></div>'+
+            '<button class="srow-del" type="button" data-del title="Убрать из корзины" aria-label="Убрать из корзины"><i data-lucide="trash-2"></i></button>'+
+          '</div>'+
         '</div>'+
       '</div>'+
       '<div class="sterm-panel">'+
-        '<div class="stp-row">'+
-          '<button class="stp-step" type="button" data-idays="-1">−</button>'+
-          '<span class="stp-val"><b>'+days+'</b> '+dayWord(days)+'</span>'+
-          '<button class="stp-step" type="button" data-idays="1">+</button>'+
-          '<button class="stp-del" type="button" data-del title="Убрать"><i data-lucide="trash-2"></i></button>'+
+        /* Сроки словами — число без единицы клиенту не читается */
+        '<div class="stp-quick">'+
+          PRESET_DAYS.map(function(p){
+            var lb=p===7?'неделя':p===30?'месяц':p+' '+dayWord(p);
+            /* Сроки с подарочными сутками помечаем — иначе выгода видна только после выбора */
+            var gift=C.freeDays(p,t.power);
+            return '<button type="button" class="'+(gift>0?'gift':'')+(days===p?' on':'')+'" data-sdays="'+p+'">'+
+              lb+(gift>0?'<em>+'+gift+' в подарок</em>':'')+'</button>';
+          }).join('')+
         '</div>'+
-        (own?'<div class="stp-foot"><button type="button" data-same>как у всех — '+st.days+' '+dayWord(st.days)+'</button></div>':'')+
+        '<div class="stp-one">'+
+          '<label class="stp-lab" for="od'+it.id+'">Другой срок</label>'+
+          '<div class="stp-box">'+
+            '<button type="button" data-idays="-1"'+(days<=1?' disabled':'')+' aria-label="Меньше на сутки">−</button>'+
+            '<input id="od'+it.id+'" type="number" min="1" max="90" inputmode="numeric" data-odays value="'+days+'" />'+
+            '<button type="button" data-idays="1" aria-label="Больше на сутки">+</button>'+
+          '</div>'+
+        '</div>'+
+        /* Одна строка расчёта заменяет пояснения на самих кнопках */
+        '<div class="stp-calc">'+
+          (price==null
+            ? 'Цену уточним в переписке'
+            : '<b>'+bill+' '+dayWord(bill)+'</b> × '+fmt(price)+
+              (it.qty>1?' × '+it.qty+' шт':'')+' = <b>'+pre+fmt(price*bill*it.qty)+'</b>'+
+              (free>0
+                ? '<em>'+free+' '+dayWord(free)+' в подарок — экономия '+fmt(price*free*it.qty)+'</em>'
+                : ''))+
+        '</div>'+
+        (own?'<button class="stp-same" type="button" data-same>Вернуть общий срок — '+st.days+' '+dayWord(st.days)+'</button>':'')+
+      '</div>'+
       '</div>'+
     '</div>';
   };
@@ -75,10 +106,10 @@
       if(price==null) calc=dd+' '+dayWord(dd)+' · цена по запросу';
       else{
         var pre=(i.unitPrice==null && t.priceNote)?'от ':'';
-        calc=dd+' '+dayWord(dd)+' × '+pre+num(price)+' ₸'+
+        calc=bill+' '+dayWord(bill)+' × '+num(price)+' ₸'+
           (i.qty>1?' × '+i.qty+' шт':'')+
           ' = '+pre+num(price*bill*i.qty)+' ₸'+
-          (free>0?' ('+free+' '+dayWord(free)+' в подарок)':'');
+          (free>0?' (берёт на '+dd+' '+dayWord(dd)+', '+free+' в подарок)':'');
       }
       return '▸ '+(cat||'Инструмент')+'\n  '+det.join(' · ')+'\n  '+calc;
     }).filter(Boolean);
@@ -120,7 +151,7 @@
     icons();
   };
 
-  var render=function(){
+  var render=function(keepRows){
     var st=C.read(), has=st.items.length>0;
     $('cartEmpty').hidden=has; $('cartMain').hidden=!has; $('actBar').hidden=!has;
     C.syncBadge();
@@ -132,19 +163,19 @@
     var maxD=eff.reduce(function(m,d){ return Math.max(m,d) }, 1);
     var uniqD={}; eff.forEach(function(d){ uniqD[d]=1 });
     var one=Object.keys(uniqD).length===1 ? eff[0] : null;
-    var anyOwn=one===null;
+    var anyOwn=st.items.some(function(i){ return !!i.days });
     $('durLbl').textContent = one!==null ? one+' '+dayWord(one) : 'до '+maxD+' '+dayWord(maxD);
     $('rDays').textContent  = one!==null ? one+' '+dayWord(one) : 'разные сроки';
     $('mixNote').hidden=!anyOwn;
-    $('durLab').textContent = anyOwn ? 'Задать всем позициям' : 'Срок для всей заявки';
-
-    $('durNum').textContent = one!==null ? one : '—';
-    $('durow').innerHTML=PRESETS.map(function(p){
-      var lb=p===1?'сутки':p===7?'неделя':p===30?'месяц':p+' суток';
+    $('durLab').textContent = anyOwn
+      ? 'У части позиций свой срок — кнопка задаст всем один'
+      : 'Применится ко всем позициям';
+    $('durow').innerHTML=PRESET_DAYS.map(function(p){
+      var lb=p===7?'неделя':p===30?'месяц':p+' '+dayWord(p);
       return '<button type="button" class="'+(one===p?'on':'')+'" data-p="'+p+'">'+lb+'</button>';
     }).join('');
 
-    $('cartList').innerHTML=st.items.map(row).join('');
+    if(!keepRows) $('cartList').innerHTML=st.items.map(row).join('');
 
     var tt=C.totals();
     var vary=st.items.some(function(i){ var t=C.toolOf(i); return t && i.unitPrice==null && t.priceNote });
@@ -210,32 +241,81 @@
     if(e.target.closest('[data-inc]')) C.setQty(id,it.qty+1);
     else if(e.target.closest('[data-dec]')) C.setQty(id,it.qty-1);
     else if(e.target.closest('[data-del]')) C.remove(id);
-    else if(e.target.closest('[data-term]')){ open[id]=!open[id]; }
+    else if(e.target.closest('[data-term]')){
+      var was=open[id];
+      open={};              /* открыта всегда одна строка */
+      if(!was) open[id]=true;
+    }
     else if(e.target.closest('[data-idays]')){
       var dl=+e.target.closest('[data-idays]').dataset.idays;
-      C.setItemDays(id, C.itemDays(it,st)+dl);
+      C.setItemDays(id, Math.max(1, C.itemDays(it,st)+dl));
     }
+    else if(e.target.closest('[data-sdays]')) C.setItemDays(id, +e.target.closest('[data-sdays]').dataset.sdays);
     else if(e.target.closest('[data-same]')) C.setItemDays(id,null);
     else return;
     render();
   });
+
+  var MAX_DAYS=90;
+  /* Клик в поле выделяет число: набор «10» заменяет прежнее значение, а не дописывает к нему */
+  $('cartList').addEventListener('focus', function(e){
+    var inp=e.target.closest && e.target.closest('[data-odays]');
+    if(inp) setTimeout(function(){ try{ inp.select() }catch(err){} },0);
+  }, true);
+
+  /* Обновляет цифры строки, не пересобирая её — поле с курсором остаётся живым */
+  var repaintRow=function(id){
+    var st=C.read(), it=null;
+    st.items.forEach(function(i){ if(i.id===id) it=i });
+    var box=document.querySelector('.srow[data-id="'+id+'"]');
+    if(!it || !box) return;
+    var tmp=document.createElement('div');
+    tmp.innerHTML=row(it);
+    ['.smain','.stp-calc','.stp-quick'].forEach(function(sel){
+      var from=tmp.querySelector(sel), to=box.querySelector(sel);
+      if(from && to) to.innerHTML=from.innerHTML;
+    });
+    icons();
+  };
+
+  $('cartList').addEventListener('input', function(e){
+    var inp=e.target.closest('[data-odays]'); if(!inp) return;
+    var host=inp.closest('.srow'); if(!host) return;
+    var v=parseInt(inp.value,10);
+    if(!v || v<1) return;              /* пустое поле не трогаем — восстановим на blur */
+    if(v>MAX_DAYS){ v=MAX_DAYS; inp.value=MAX_DAYS }
+    var id=host.dataset.id;
+    C.setItemDays(id, v);
+    render(true);
+    repaintRow(id);
+  });
+  /* Ушли из поля — приводим его к действующему сроку и пересобираем корзину целиком */
+  $('cartList').addEventListener('blur', function(e){
+    var inp=e.target.closest && e.target.closest('[data-odays]'); if(!inp) return;
+    var host=inp.closest('.srow'); if(!host) return;
+    var st=C.read(), it=null;
+    st.items.forEach(function(i){ if(i.id===host.dataset.id) it=i });
+    if(it) inp.value=C.itemDays(it,st);
+    render();
+  }, true);
   var applyAll=function(d){
     C.setDays(d);
     C.read().items.forEach(function(i){ C.setItemDays(i.id,null) });
   };
-  var durClick=function(e){
-    var b=e.target.closest('[data-p]'), n=e.target.closest('[data-nudge]');
-    var st=C.read();
-    var eff=st.items.map(function(i){ return C.itemDays(i,st) });
-    var uq={}; eff.forEach(function(d){ uq[d]=1 });
-    var cur=Object.keys(uq).length===1 ? eff[0] : st.days;
-    if(b) applyAll(+b.dataset.p);
-    else if(n) applyAll(cur + (+n.dataset.nudge));
-    else return;
+  /* Щелчок мимо строки — закрываем раскрытый срок */
+  document.addEventListener('click', function(e){
+    if(!Object.keys(open).length) return;
+    if(e.target.closest('.srow')) return;
+    open={}; render();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape' && Object.keys(open).length){ open={}; render() }
+  });
+  $('durow').addEventListener('click', function(e){
+    var b=e.target.closest('[data-p]'); if(!b) return;
+    applyAll(+b.dataset.p);
     render();
-  };
-  $('durow').addEventListener('click', durClick);
-  document.querySelector('.dunudge').addEventListener('click', durClick);
+  });
   $('shipRow').addEventListener('click', function(e){
     var b=e.target.closest('[data-ship]'); if(!b) return;
     C.setShip(b.dataset.ship); render();

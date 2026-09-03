@@ -137,12 +137,8 @@
     { id:'dgu-thor-cummins-tec3-200', name:'Дизельный генератор THOR Cummins TEC3-200', power:'200 кВт', brand:'THOR Cummins', price:220000, note:'Номинальная мощность 200 кВт', photo:'thor-cummins-tec3-200.png' },
   ];
 
-  const catName = id => (categories.find(c=>c.id===id)||{}).name || '';
-  const catById = id => categories.find(c=>c.id===id);
   const NO_PHOTO = 'assets/tools/_no-photo.svg';
-  const img = ()=>NO_PHOTO;
 
-  // Фото лежат в assets/tools/<файл из таблицы>. Пока файла нет — плейсхолдер.
   const HAVE = {
     'gazonokosilka-benzinovaya-ivt-glms-18b.png':1,
     'alteco-apg-3700.png':1,
@@ -237,29 +233,51 @@
     'vyshka-tura-vs-250-1-2-1-2h2-m.png':1,
     'wacker-neuson-ds-70-dizelnaya.png':1
   };
-  const byId = {}; tools.concat(dgu).forEach(t=>{ byId[t.id]=t });
-  const photoFile = id => (byId[id]||{}).photo || '';
-  const hasPhoto = id => !!HAVE[photoFile(id)];
-  const photo = (id) => hasPhoto(id) ? 'assets/tools/'+photoFile(id) : NO_PHOTO;
 
-  const brandCount = {};
-  tools.forEach(t=>{ if(t.brand){ brandCount[t.brand]=(brandCount[t.brand]||0)+1 } });
-  const brands = Object.keys(brandCount).sort((a,b)=>a.localeCompare(b,'ru'));
+  /* Собирает window.QS из набора данных. Один и тот же расчёт
+     для встроенного каталога и для данных из базы. */
+  function build(src){
+    const families = src.families, categories = src.categories,
+          tools = src.tools, dgu = src.dgu;
 
-  const powerOrder = ['Бензиновый','Электрический','Аккумуляторный','Дизельный','Пневматический','Ручной'];
-  const powerCount = {};
-  tools.forEach(t=>{ powerCount[t.power]=(powerCount[t.power]||0)+1 });
-  const powers = powerOrder.filter(p=>powerCount[p]);
+    const byId = {}; tools.concat(dgu).forEach(t=>{ byId[t.id]=t });
+    const catName = id => (categories.find(c=>c.id===id)||{}).name || '';
+    const catById = id => categories.find(c=>c.id===id);
 
-  const catCount = {};
-  tools.forEach(t=>{ catCount[t.cat]=(catCount[t.cat]||0)+1 });
+    // photo у позиции: имя файла (встроенный каталог) или полный URL (база)
+    const photoFile = id => (byId[id]||{}).photo || '';
+    const isUrl = p => /^https?:\/\//.test(p);
+    const hasPhoto = id => { const p = photoFile(id); return isUrl(p) ? true : !!HAVE[p] };
+    const photo = id => {
+      const p = photoFile(id);
+      if(!p) return NO_PHOTO;
+      return isUrl(p) ? p : (HAVE[p] ? 'assets/tools/'+p : NO_PHOTO);
+    };
 
-  const isPromoPower = p => /бензин|электр|аккум/i.test(p||'');
+    const brandCount = {};
+    tools.forEach(t=>{ if(t.brand){ brandCount[t.brand]=(brandCount[t.brand]||0)+1 } });
+    const brands = Object.keys(brandCount).sort((a,b)=>a.localeCompare(b,'ru'));
 
-  window.QS = {
-    families, categories, tools, dgu, brands, powers,
-    brandCount, powerCount, catCount,
-    catName, catById, img, photo, hasPhoto, photoFile, isPromoPower,
-    fmt: n => (n==null ? 'Цена по запросу' : Number(n).toLocaleString('ru-RU').replace(/,/g,' ') + ' ₸'),
-  };
+    const powerOrder = ['Бензиновый','Электрический','Аккумуляторный','Дизельный','Пневматический','Ручной'];
+    const powerCount = {};
+    tools.forEach(t=>{ powerCount[t.power]=(powerCount[t.power]||0)+1 });
+    const powers = powerOrder.filter(p=>powerCount[p]);
+
+    const catCount = {};
+    tools.forEach(t=>{ catCount[t.cat]=(catCount[t.cat]||0)+1 });
+
+    const isPromoPower = p => /бензин|электр|аккум/i.test(p||'');
+
+    return {
+      families, categories, tools, dgu, brands, powers,
+      brandCount, powerCount, catCount,
+      promo: src.promo || null, settings: src.settings || null,
+      source: src.source || 'built-in', version: src.version || '',
+      catName, catById, img: ()=>NO_PHOTO, photo, hasPhoto, photoFile, isPromoPower,
+      fmt: n => (n==null ? 'Цена по запросу' : Number(n).toLocaleString('ru-RU').replace(/,/g,' ') + ' ₸'),
+      build: build
+    };
+  }
+
+  window.QS = build({ families, categories, tools, dgu });
 })();

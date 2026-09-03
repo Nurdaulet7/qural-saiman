@@ -22,7 +22,8 @@
       (t.price?' — '+t.price.toLocaleString('ru-RU')+' ₸/сутки':'')+
       (t.spec?'. '+t.spec:'')+'. Заявка через WhatsApp, выдача со склада в день обращения.';
     var url=location.origin+location.pathname+'?id='+encodeURIComponent(t.id);
-    var img=location.origin+'/assets/tools/'+(t.photo||'');
+    var p=QS.photo(t.id);
+    var img=/^https?:\/\//.test(p) ? p : location.origin+'/'+p.replace(/^\.?\//,'');
     var set=function(sel,attr,val){ var m=document.head.querySelector(sel); if(m) m.setAttribute(attr,val) };
     set('meta[name="description"]','content',desc);
     set('link[rel="canonical"]','href',url);

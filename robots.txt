@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin.html
 
-Sitemap: https://qural-saiman.kz/sitemap.xml
+Sitemap: https://qural-saiman.pages.dev/sitemap.xml

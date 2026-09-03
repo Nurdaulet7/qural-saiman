@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Заявка на аренду — QURAL-SAIMAN</title>
 <meta name="description" content="Соберите список инструмента и отправьте заявку в WhatsApp — менеджер подтвердит наличие и сроки.">
-<link rel="canonical" href="https://qural-saiman.kz/cart.html">
+<link rel="canonical" href="https://qural-saiman.pages.dev/cart.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="QURAL-SAIMAN">
 <meta property="og:locale" content="ru_KZ">
 <meta property="og:title" content="Заявка на аренду — QURAL-SAIMAN">
 <meta property="og:description" content="Соберите список инструмента и отправьте заявку в WhatsApp — менеджер подтвердит наличие и сроки.">
-<meta property="og:url" content="https://qural-saiman.kz/cart.html">
-<meta property="og:image" content="https://qural-saiman.kz/assets/hero-shop.png">
+<meta property="og:url" content="https://qural-saiman.pages.dev/cart.html">
+<meta property="og:image" content="https://qural-saiman.pages.dev/assets/hero-shop.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="manifest" href="manifest.webmanifest">
@@ -28,27 +28,16 @@
 <style>
 /* ===== ВАРИАНТ 2: бланк заявки ===== */
 .slip{padding:0}
-.dates{padding:18px;border-bottom:1px solid var(--line)}
-.dcell{display:flex;flex-direction:column;gap:3px;min-width:0}
-.dcell span{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted-2)}
-.dcell b{font-size:23px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
-.dcell em{font-size:11.5px;font-weight:600;font-style:normal;color:var(--muted)}
-.dcell.to{text-align:right}
-.dcell input{position:absolute;opacity:0;width:0;height:0}
-.dcell label{display:flex;flex-direction:column;gap:3px;cursor:pointer}
-.dcell label b{border-bottom:1.5px dashed var(--line-2);align-self:flex-start;padding-bottom:1px}
-.dbridge{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted-2)}
-.dbridge b{font-size:12.5px;font-weight:800;color:var(--orange);white-space:nowrap}
-.dbridge i{display:block;width:34px;height:1px;background:var(--line-2)}
-.durhead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px 0}
-.durhead span{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted-2)}
-.dunudge{display:flex;align-items:center;gap:2px;border:1px solid var(--line);border-radius:11px;overflow:hidden;flex-shrink:0}
-.dunudge button{width:38px;height:36px;background:var(--bg);font-size:17px;font-weight:600;color:var(--ink);line-height:1}
-.dunudge button:active{background:var(--bg-soft)}
-.dunudge b{min-width:30px;text-align:center;font-size:14px;font-weight:800;letter-spacing:-.02em}
-.durow{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;padding:10px 18px 16px;border-bottom:1px solid var(--line)}
+/* Один блок вместо трёх: сводка срока, кнопки «задать всем», сноска */
+.durblock{padding:18px 18px 16px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:12px}
+.durtop{display:flex;flex-direction:column;gap:3px;min-width:0}
+.durcap{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted-2)}
+.durtop b{font-size:23px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+.durtop em{font-size:11.5px;font-weight:600;font-style:normal;color:var(--muted)}
+.durfoot{font-size:11.5px;font-weight:600;color:var(--muted);line-height:1.45;text-wrap:pretty}
+.durow{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
 .durow button{min-height:40px;padding:0 6px;border-radius:12px;background:var(--bg);border:1px solid var(--line);font-size:12.5px;font-weight:700;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.durow button.on{background:var(--orange);border-color:var(--orange);color:#fff}
+.durow button.on{background:var(--orange-soft);border-color:var(--orange);box-shadow:inset 0 0 0 1px var(--orange)}
 .slab2{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:20px 18px 10px}
 .slab2 b{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2)}
 .slab2 button{font-size:12px;font-weight:700;color:var(--muted)}
@@ -70,17 +59,34 @@
 .sterm.own{background:var(--orange-soft);color:var(--orange-dark)}
 .sterm.own svg{color:var(--orange)}
 .srow.open .sterm .cv{transform:rotate(180deg)}
-.sterm-panel{display:none;padding:0 18px 14px}
-.srow.open .sterm-panel{display:block}
-.stp-row{display:flex;align-items:center;gap:8px}
-.stp-step{width:44px;height:44px;border-radius:12px;background:var(--bg-soft);font-size:19px;font-weight:600;color:var(--ink);line-height:1}
-.stp-step:active{background:var(--line)}
-.stp-val{flex:1;text-align:center;font-size:13.5px;font-weight:600;color:var(--muted)}
-.stp-val b{font-size:17px;font-weight:800;color:var(--ink);letter-spacing:-.02em}
-.stp-del{width:44px;height:44px;border-radius:12px;background:var(--bg-soft);display:grid;place-items:center}
-.stp-del svg{width:16px;height:16px;color:var(--muted)}
-.stp-foot{margin-top:9px;font-size:11.5px;color:var(--muted)}
-.stp-foot button{font-size:11.5px;font-weight:700;color:var(--orange);text-decoration:underline}
+.sterm-panel{display:none;padding:2px 18px 15px}
+.srow.open .sterm-panel{display:flex;flex-direction:column;gap:10px}
+.stp-one{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--line-2);border-radius:13px}
+.stp-lab{flex:1;font-size:12.5px;font-weight:700;color:var(--muted)}
+.stp-box{display:flex;align-items:center;border:1px solid var(--line-2);border-radius:11px;overflow:hidden;flex-shrink:0}
+.stp-box button{width:40px;height:40px;font-size:20px;font-weight:500;color:var(--ink);line-height:1;display:grid;place-items:center}
+.stp-box button:active{background:var(--bg-soft)}
+.stp-box button[disabled]{color:var(--line-2);pointer-events:none}
+.stp-box input{width:56px;height:40px;border:0;border-left:1px solid var(--line);border-right:1px solid var(--line);outline:none;background:none;font:inherit;font-size:16px;font-weight:800;text-align:center;color:var(--ink);-moz-appearance:textfield}
+.stp-box input::-webkit-outer-spin-button,.stp-box input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.stp-quick{display:flex;gap:6px;flex-wrap:wrap}
+.stp-quick button{flex:1 1 auto;min-height:40px;padding:4px 12px;border-radius:11px;border:1px solid var(--line-2);background:var(--bg);font-size:13px;font-weight:700;color:var(--ink);white-space:nowrap;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15}
+.stp-quick button em{font-style:normal;font-size:10.5px;font-weight:700;color:var(--orange-text)}
+/* Выбор несёт оранжевая рамка и светлая заливка; подпись про подарок — просто цветом */
+.stp-quick button.on{background:var(--orange-soft);border-color:var(--orange);box-shadow:inset 0 0 0 1px var(--orange)}
+.stp-calc{padding:11px 14px;border-radius:12px;background:var(--bg-soft);font-size:13px;font-weight:600;color:var(--muted);line-height:1.45}
+.stp-calc b{font-weight:800;color:var(--ink)}
+.stp-calc em{display:block;font-style:normal;margin-top:3px;font-size:12px;font-weight:700;color:var(--orange-text)}
+.stp-calc .nopromo{display:block;font-style:normal;margin-top:3px;font-size:11.5px;font-weight:600;color:var(--muted)}
+/* Источник срока квалифицирует значение, поэтому набран тише самого срока */
+.sterm .src{font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.sterm.own .src{color:var(--orange-text)}
+.stp-same{align-self:flex-start;font-size:12px;font-weight:700;color:var(--orange);text-decoration:underline;text-align:left}
+.srow-acts{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.srow-del{width:32px;height:32px;flex-shrink:0;border-radius:9px;background:var(--bg-soft);display:grid;place-items:center}
+.srow-del svg{width:15px;height:15px;color:var(--muted-2)}
+.srow-del:active{background:var(--red-soft)}
+.srow-del:active svg{color:var(--red)}
 .stepper{display:flex;align-items:center;gap:1px;flex-shrink:0}
 .stepper button{width:32px;height:32px;border-radius:9px;background:var(--bg-soft);font-size:16px;font-weight:600;color:var(--ink);line-height:1}
 .stepper button:active{background:var(--line)}
@@ -152,16 +158,14 @@
   #cartMain[hidden]{display:none}
   .cartpage{margin:0 32px;padding-bottom:40px}
   .cartmain{min-width:0;border:1px solid var(--line);border-radius:20px;overflow:hidden}
-  .dates{padding:22px 24px;background:var(--bg-soft);border-bottom:1px solid var(--line)}
-  .dcell span{font-size:11px}
-  .dcell b{font-size:26px}
-  .dcell em{font-size:12.5px}
-  .durhead{padding:18px 24px 0}
-  .durow{grid-template-columns:repeat(4,1fr);gap:9px;padding:12px 24px 20px}
-  .durow button{min-height:44px;font-size:13px;transition:border-color var(--t),color var(--t)}
-  .durow button:hover:not(.on){border-color:var(--orange);color:var(--orange-dark)}
-  .dunudge button{cursor:pointer;transition:background var(--t)}
-  .dunudge button:hover{background:var(--bg-soft)}
+  .durblock{padding:22px 24px 20px;background:var(--bg-soft);gap:14px}
+  .durcap{font-size:11px}
+  .durtop b{font-size:26px}
+  .durtop em{font-size:12.5px}
+  .durfoot{font-size:12px}
+  .durow{gap:9px}
+  .durow button{min-height:40px;transition:border-color var(--t)}
+  .durow button:hover:not(.on){border-color:var(--orange)}
   .slab2{padding:22px 24px 10px}
   .slab2 b{font-size:11.5px}
   .slab2 button{transition:color var(--t)}
@@ -174,9 +178,14 @@
   .srow:last-of-type{border-bottom:0}
   .sterm{cursor:pointer;transition:background var(--t)}
   .sterm:hover{background:var(--line)}
-  .sterm-panel{padding:0 24px 16px}
-  .stepper button,.stp-step,.stp-del{cursor:pointer;transition:background var(--t)}
+  .sterm-panel{padding:2px 24px 16px}
+  .stp-box button,.stp-quick button{cursor:pointer;transition:background var(--t),border-color var(--t),color var(--t)}
+  .stp-box button:hover{background:var(--bg-soft)}
+  .stp-quick button:hover:not(.on){border-color:var(--muted-2)}
+  .stepper button,.srow-del{cursor:pointer;transition:background var(--t)}
   .stepper button:hover{background:var(--line)}
+  .srow-del:hover{background:var(--red-soft)}
+  .srow-del:hover svg{color:var(--red)}
   .promobar{margin:0 24px 18px}
   .cartside{position:sticky;top:88px;display:flex;flex-direction:column;gap:14px}
   .cartmain{min-width:0}
@@ -213,7 +222,12 @@
   .favcard .fadd,.favcard .funfav{transition:background var(--t),transform var(--t)}
   .favcard .fadd:hover{transform:scale(1.08)}
   .srow{transition:background var(--t)}
-  .srow:hover{background:var(--bg-soft)}
+  /* Подсветка строки — полосой слева, без заливки: кнопки ни с чем не сливаются */
+  .srow{position:relative}
+  .srow::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--orange);opacity:0;transition:opacity var(--t);pointer-events:none}
+  .srow:hover::before{opacity:1}
+  .srow:hover .srow-del{background:var(--red-soft)}
+  .srow:hover .srow-del svg{color:var(--red)}
   .srow .sim img{transition:transform .28s ease}
   .srow:hover .sim img{transform:scale(1.06)}
   .actbar .wa{transition:background var(--t),transform var(--t),box-shadow var(--t)}
@@ -237,17 +251,38 @@
   #cartMain{grid-template-columns:minmax(0,1fr) 320px;gap:22px}
   .cartpage{margin:0 24px;padding-bottom:32px}
   .cartside .actbar{top:auto}
-  .dates,.smain{padding-left:18px;padding-right:18px}
-  .durhead,.slab2,.shiprow{padding-left:18px;padding-right:18px}
+  .smain{padding-left:18px;padding-right:18px}
+  .durblock,.slab2,.shiprow{padding-left:18px;padding-right:18px}
   .shiprow{padding-bottom:18px}
-  .durow{padding:12px 18px 18px;gap:7px}
-  .durow button{font-size:12px;padding:0 4px}
+  .durow{gap:5px}
+  .durow button{padding:0 3px;font-size:12px}
   .sterm-panel,.mixhint{padding-left:18px;padding-right:18px}
   .promobar{margin:0 18px 16px}
   .receipt{padding:18px}
   .rline.grand b{font-size:24px}
   .favsec{padding:0 0 24px}
   .favrail{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){
+  /* Панель срока: чипы по три в ряд, шаг во всю ширину — иначе всё жмётся в углу */
+  .sterm-panel{padding:2px 14px 14px;gap:9px}
+  .stp-quick{gap:5px}
+  .stp-quick button{flex:1 1 calc(33.333% - 4px);min-width:0;padding:5px 6px;font-size:12.5px}
+  .stp-quick button em{font-size:10px}
+  .stp-one{flex-direction:column;align-items:stretch;gap:8px;padding:10px 12px}
+  .stp-lab{flex:none}
+  .stp-box{align-self:stretch}
+  .stp-box button{flex:1}
+  .stp-box input{flex:1;width:auto;min-width:0}
+  .stp-calc{padding:10px 12px;font-size:12.5px}
+  .stp-same{font-size:11.5px}
+  /* Строка позиции: картинка+название сверху во всю ширину, цена/шаги снизу —
+     иначе кнопка «Свой срок» жмётся в узкую колонку и обрезается */
+  .smain{flex-wrap:wrap;padding:12px 14px}
+  .stx{flex:1 1 calc(100% - 56px)}
+  .sterm{max-width:100%}
+  .sright{flex:0 0 100%;flex-direction:row;align-items:center;justify-content:space-between;margin-top:2px;padding-left:56px}
+  .ssum{font-size:15px}
+}
 </style>
 </head>
 <body>
@@ -305,18 +340,15 @@
 <div class="cartpage">
 <div class="slip" id="cartMain" hidden>
  <div class="cartmain">
-  <div class="dates">
-    <div class="dcell"><span>Срок аренды</span><b id="durLbl">3 суток</b><em>дату выдачи согласуем в WhatsApp</em></div>
-  </div>
-  <div class="durhead">
-    <span id="durLab">Срок для всей заявки</span>
-    <div class="dunudge">
-      <button type="button" data-nudge="-1" aria-label="Меньше">−</button>
-      <b id="durNum">3</b>
-      <button type="button" data-nudge="1" aria-label="Больше">+</button>
+  <div class="durblock">
+    <div class="durtop">
+      <span class="durcap">Срок аренды</span>
+      <b id="durLbl">3 суток</b>
+      <em id="durLab">Применится ко всем позициям</em>
     </div>
+    <div class="durow" id="durow"></div>
+    <p class="durfoot">Дату выдачи согласуем в WhatsApp.</p>
   </div>
-  <div class="durow" id="durow"></div>
 
   <div class="slab2"><b>Инструмент</b><button type="button" id="clearCart">Очистить</button></div>
   <p class="mixhint" id="mixNote" hidden>Срок можно задать отдельно для каждой позиции — нажмите на дату в строке.</p>
@@ -369,10 +401,18 @@
 </div>
 
 
+</div>
+
 <footer class="dfooter">
   <div class="dfoot-col">
     <span class="dfoot-brand"><span class="dfmark"></span><span class="wm"><b>QURAL<i>–</i><u>SAIMAN</u></b><em>SERVICE</em></span></span>
     <p>Прокат строительного инструмента в Шымкенте. Более 80 позиций на складе, без залога.</p>
+    <div class="dfoot-social">
+      <a href="https://wa.me/77057802074" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="wa" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg></a>
+      <a href="https://go.2gis.com/xXvVd" target="_blank" rel="noopener" aria-label="2ГИС"><i data-lucide="map-pin"></i></a>
+      <a href="https://www.tiktok.com/@qsaimanservice" target="_blank" rel="noopener" aria-label="TikTok"><svg class="tt" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
+      <a href="https://www.instagram.com/quralsaiman.shym/" target="_blank" rel="noopener" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+    </div>
   </div>
   <div class="dfoot-col">
     <b>Навигация</b>
@@ -415,6 +455,7 @@
 
 <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 <script src="tools-data.js"></script>
+<script src="qs-catalog.js"></script>
 <script src="cat-icons.js"></script>
 <script src="app-cart.js"></script>
 <script src="callback-widget.js"></script>
