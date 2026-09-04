@@ -24,7 +24,12 @@
   waitWidget().then(function(W){ if(W && W.hidePhoneButton) try{ W.hidePhoneButton() }catch(e){} });
 
   /* digits — ровно 10 цифр без кода страны, столько ждёт поле Binotel */
+  var busy=false, lastSent=0;
   var requestCallback=function(digits){
+    /* Двойная отправка = два звонка оператору: держим замок и паузу между заявками */
+    if(busy) return Promise.reject(new Error('busy'));
+    if(Date.now()-lastSent < 60000) return Promise.reject(new Error('cooldown'));
+    busy=true;
     return waitWidget().then(function(W){
       if(!W) throw new Error('binotel-offline');
       W.openPassiveForm();
@@ -35,19 +40,26 @@
           var btn=document.querySelector('.bingc-passive-phone-form-button');
           if(inp && btn){
             clearInterval(iv);
+            var box=document.getElementById('bingc-passive');
+            var before=box?box.className:'';
             inp.value=digits;
-            ['input','keyup','change'].forEach(function(ev){ inp.dispatchEvent(new Event(ev,{bubbles:true})) });
+            /* только input: keyup и change у них сами запускают отправку */
+            inp.dispatchEvent(new Event('input',{bubbles:true}));
             setTimeout(function(){
-              btn.click();
+              /* если от input их скрипт уже ушёл со ввода — второй раз не жмём */
+              var after=box?box.className:'';
+              var alreadySent = after!==before || !document.body.contains(inp);
+              if(!alreadySent) btn.click();
+              lastSent=Date.now();
               setTimeout(function(){
                 try{ if(W.closeActiveForm) W.closeActiveForm() }catch(e){}
                 resolve();
               },800);
-            },140);
+            },260);
           } else if(Date.now()-t0>5000){ clearInterval(iv); reject(new Error('binotel-form')) }
         },120);
       });
-    });
+    }).then(function(v){ busy=false; return v }, function(e){ busy=false; throw e });
   };
   window.QSCallback = { request: requestCallback };
 
@@ -115,12 +127,21 @@
         };
         requestAnimationFrame(tick);
         icons();
-      }).catch(function(){
+      }).catch(function(err){
+        /* Повторная отправка — тихо показываем, что заявка уже ушла */
+        if(err && (err.message==='busy' || err.message==='cooldown')){
+          form.hidden=true; ok.hidden=false;
+          document.getElementById(idPrefix+'OkTxt').textContent='Заявка уже принята — ожидайте звонка';
+          return;
+        }
         /* Виджет не поднялся — не молчим, а даём позвонить самому */
         btn.disabled=false; btn.classList.remove('loading');
+        err_show();
+      });
+      function err_show(){
         err.hidden=false;
         err.innerHTML='Не удалось отправить заявку. Позвоните нам: <a href="tel:+77057802074">+7 705 780 2074</a>';
-      });
+      }
     });
   };
 

@@ -142,7 +142,9 @@ svg.wa{fill:currentColor;stroke:none}
   transition:transform var(--t);border:1px solid var(--line);
 }
 .card:active{transform:scale(.975)}
-.card .ph{aspect-ratio:1/1;position:relative;padding:10px;background:var(--bg-soft)}
+/* width+flex:none обязательны: iOS Safari иначе меряет флекс-элемент с aspect-ratio
+   по картинке, блок выходит шире карточки и кнопка избранного уезжает за край */
+.card .ph{aspect-ratio:1/1;position:relative;padding:10px;background:var(--bg-soft);width:100%;flex:none;box-sizing:border-box}
 .card .ph img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
 .card .badge{
   position:absolute;left:10px;top:10px;z-index:2;font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
@@ -812,7 +814,7 @@ body.noscroll{overflow:hidden}
 
 .appbar .cnt{font-size:12px;font-weight:700;color:var(--muted);white-space:nowrap}
 
-.card .ph .fav{position:absolute;top:11px;right:11px;z-index:2;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.88);backdrop-filter:blur(4px);display:grid;place-items:center;transition:background var(--t)}
+.card .ph .fav{position:absolute;top:11px;right:11px;z-index:2;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);display:grid;place-items:center;transition:background var(--t)}
 .card .ph .fav::before{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px}
 .card .ph .fav svg{width:16px;height:16px;color:var(--muted);transition:color var(--t),fill var(--t);fill:transparent}
 .card .ph .fav.on svg{color:var(--orange);fill:var(--orange-soft)}

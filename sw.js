@@ -1,4 +1,4 @@
-const CACHE='qs-v22';
+const CACHE='qs-v24';
 const CORE=['./','./index.html','./catalog.html','./product.html','./cart.html','./contacts.html','./info.html','./dgu.html','./discounts.html','./responsibility.html','./terms.html','./privacy.html','./return.html','./delivery.html','./payment.html','./faq.html','./offline.html','./app.css','./tools-data.js','./qs-catalog.js','./cat-icons.js','./app-cart.js','./app-search.js','./catalog-app.js','./product-app.js','./cart-app.js','./callback-widget.js','./manifest.webmanifest','./sitemap.xml','./assets/favicon.svg','./assets/icon-192.png','./assets/icon-512.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>Promise.all(CORE.map(u=>c.add(new Request(u,{cache:'reload'})).catch(()=>{})))).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
