@@ -89,38 +89,41 @@
   var waLink=function(){
     var st=C.read(), tt=C.totals(), vary=false;
     var num=function(n){ return Number(n).toLocaleString('ru-RU').replace(/,/g,' ') };
+    var n=0;
     var blocks=st.items.map(function(i){
       var t=C.toolOf(i); if(!t) return '';
-      if(i.unitPrice==null && t.priceNote) vary=true;
+      var approx=(i.unitPrice==null && t.priceNote);
+      if(approx) vary=true;
       var cat=(QS.catById(t.cat)||{}).name||'';
       var dd=C.itemDays(i,st);
       var free=C.freeDays(dd,t.power), bill=dd-free;
       var price=i.unitPrice!=null?i.unitPrice:t.price;
-      /* строка 2: модель · характеристика/комплектация · количество */
-      var det=[t.name];
-      var extra=i.cfgLabel?fixCfg(i.cfgLabel):(t.spec||'');
-      if(extra) det.push(extra);
-      if(i.qty>1) det.push(i.qty+' шт');
-      /* строка 3: срок × цена = сумма */
+      n++;
+      /* Категория и модель в одной строке: раньше категория съедала лишнюю строку */
+      var head=n+') '+(cat?cat+' — ':'')+t.name+(i.qty>1?', '+i.qty+' шт':'');
+      var spec=i.cfgLabel?fixCfg(i.cfgLabel):(t.spec||'');
       var calc;
-      if(price==null) calc=dd+' '+dayWord(dd)+' · цена по запросу';
+      if(price==null) calc=dd+' '+dayWord(dd)+' — цена по запросу';
       else{
-        var pre=(i.unitPrice==null && t.priceNote)?'от ':'';
-        calc=bill+' '+dayWord(bill)+' × '+num(price)+' ₸'+
-          (i.qty>1?' × '+i.qty+' шт':'')+
-          ' = '+pre+num(price*bill*i.qty)+' ₸'+
-          (free>0?' (берёт на '+dd+' '+dayWord(dd)+', '+free+' в подарок)':'');
+        /* Умножаем на платные сутки — и пишем в строке именно их, иначе счёт
+           на глаз не сходится. «от» ставим и у ставки: точное умножение
+           с результатом «от» читается как ошибка. */
+        var p=(approx?'от ':'')+num(price)+' ₸';
+        calc=bill+' '+dayWord(bill)+' × '+p+(i.qty>1?' × '+i.qty+' шт':'')+
+          ' = '+(approx?'от ':'')+num(price*bill*i.qty)+' ₸'+
+          (approx?' (зависит от комплектации)':'');
       }
-      return '▸ '+(cat||'Инструмент')+'\n  '+det.join(' · ')+'\n  '+calc;
+      /* Срок выдачи отдельной строкой: складу важны все сутки, кассе — только платные */
+      var hand=free>0 ? '\n   Выдача на '+dd+' '+dayWord(dd)+', '+free+' в подарок' : '';
+      return head+(spec?'\n   '+spec:'')+'\n   '+calc+hand;
     }).filter(Boolean);
+    /* От первого лица: клиент сообщает свой выбор, а не читает памятку */
     var ship=st.ship==='delivery'
-      ? 'Доставка (стоимость рассчитает менеджер)'
-      : 'Самовывоз со склада — ул. Мустафы Шокая, 9а';
+      ? 'Нужна доставка'
+      : 'Заберу сам со склада';
     var msg='Здравствуйте! Хочу арендовать:\n\n'+blocks.join('\n\n')+
       '\n\nИтого: '+(tt.net?(vary?'от ':'')+fmt(tt.net):'по запросу')+
-      '\nПолучение: '+ship+
-      '\nДату выдачи согласуем'+
-      (vary?'\n(цена зависит от высоты/комплектации — уточните)':'')+
+      '\n'+ship+
       (tt.onRequest?'\n(часть позиций — по запросу)':'');
     return 'https://wa.me/77057802074?text='+encodeURIComponent(msg);
   };

@@ -23,11 +23,36 @@
   /* Их кнопку прячем сразу, как только скрипт поднимется */
   waitWidget().then(function(W){ if(W && W.hidePhoneButton) try{ W.hidePhoneButton() }catch(e){} });
 
+  /* Считаем обращения к серверу Binotel. Класс их блока — ненадёжный признак:
+     заявка может уйти, а разметка не измениться. Счётчик врать не может. */
+  var sentCount=0;
+  (function watchNetwork(){
+    var isB=function(u){ return typeof u==='string' && u.indexOf('binotel')>-1 };
+    var xo=XMLHttpRequest.prototype.open, xs=XMLHttpRequest.prototype.send;
+    XMLHttpRequest.prototype.open=function(m,u){ if(isB(u)) this.__bnt=1; return xo.apply(this,arguments) };
+    XMLHttpRequest.prototype.send=function(){ if(this.__bnt) sentCount++; return xs.apply(this,arguments) };
+    if(window.fetch){
+      var f=window.fetch;
+      window.fetch=function(u){ if(isB((u&&u.url)||u)) sentCount++; return f.apply(this,arguments) };
+    }
+    /* JSONP: они грузят ответ через script-тег */
+    try{
+      new MutationObserver(function(muts){
+        muts.forEach(function(m){
+          [].forEach.call(m.addedNodes,function(n){
+            if(n.tagName==='SCRIPT' && isB(n.src)) sentCount++;
+          });
+        });
+      }).observe(document.documentElement,{childList:true,subtree:true});
+    }catch(e){}
+  })();
+
   /* digits — ровно 10 цифр без кода страны, столько ждёт поле Binotel */
   var busy=false, lastSent=0;
   var requestCallback=function(digits){
     /* Двойная отправка = два звонка оператору: держим замок и паузу между заявками */
     if(busy) return Promise.reject(new Error('busy'));
+    try{ lastSent=Math.max(lastSent, +(sessionStorage.getItem('qs_cb_sent')||0)) }catch(e){}
     if(Date.now()-lastSent < 60000) return Promise.reject(new Error('cooldown'));
     busy=true;
     return waitWidget().then(function(W){
@@ -40,22 +65,19 @@
           var btn=document.querySelector('.bingc-passive-phone-form-button');
           if(inp && btn){
             clearInterval(iv);
-            var box=document.getElementById('bingc-passive');
-            var before=box?box.className:'';
+            var base=sentCount;
             inp.value=digits;
             /* только input: keyup и change у них сами запускают отправку */
             inp.dispatchEvent(new Event('input',{bubbles:true}));
             setTimeout(function(){
-              /* если от input их скрипт уже ушёл со ввода — второй раз не жмём */
-              var after=box?box.className:'';
-              var alreadySent = after!==before || !document.body.contains(inp);
-              if(!alreadySent) btn.click();
+              /* ушло от input само — не жмём кнопку, иначе будет вторая заявка */
+              if(sentCount===base) btn.click();
               lastSent=Date.now();
-              setTimeout(function(){
-                try{ if(W.closeActiveForm) W.closeActiveForm() }catch(e){}
-                resolve();
-              },800);
-            },260);
+              try{ sessionStorage.setItem('qs_cb_sent', String(lastSent)) }catch(e){}
+              /* Форму не закрываем: она скрыта, а обрыв на полпути может
+                 оборвать их запрос. Ждём, пока заявка точно уйдёт. */
+              setTimeout(resolve,1200);
+            },500);
           } else if(Date.now()-t0>5000){ clearInterval(iv); reject(new Error('binotel-form')) }
         },120);
       });
@@ -99,7 +121,11 @@
       '<button type="submit" class="cbsend" id="'+idPrefix+'Send" aria-label="Перезвоните мне"><i data-lucide="phone-outgoing" class="cbicn"></i><i data-lucide="loader-2" class="cbspin"></i></button>'+
     '</form>'+
     '<p class="cberr" id="'+idPrefix+'Err" hidden>Проверьте номер — нужно 10 цифр после +7</p>'+
-    '<div class="cbok" id="'+idPrefix+'Ok" hidden><span class="cbring"><svg viewBox="0 0 36 36"><circle class="bg" cx="18" cy="18" r="16"></circle><circle class="fg" id="'+idPrefix+'Ring" cx="18" cy="18" r="16"></circle></svg><b id="'+idPrefix+'Sec">30</b></span><span id="'+idPrefix+'OkTxt">Перезвоним вам совсем скоро</span></div>';
+    '<div class="cbok" id="'+idPrefix+'Ok" hidden>'+
+      '<span class="cbring"><svg viewBox="0 0 36 36"><circle class="bg" cx="18" cy="18" r="16"></circle><circle class="fg" id="'+idPrefix+'Ring" cx="18" cy="18" r="16"></circle></svg><b id="'+idPrefix+'Sec">30</b></span>'+
+      '<strong id="'+idPrefix+'OkTxt">Перезвоним вам совсем скоро</strong>'+
+      '<span class="cbnum" id="'+idPrefix+'Num"></span>'+
+    '</div>';
   };
 
   var wireForm = function(idPrefix){
@@ -107,6 +133,13 @@
         btn=document.getElementById(idPrefix+'Send'), ok=document.getElementById(idPrefix+'Ok'),
         okTxt=document.getElementById(idPrefix+'OkTxt'), err=document.getElementById(idPrefix+'Err');
     if(!form) return;
+    /* Заголовок и подзаголовок живут только в попапе; в блоке на контактах их нет */
+    var hideCardIntro=function(){
+      var card=form.closest('.cbcard');
+      if(!card) return;
+      [card.querySelector('.cbicon'), card.querySelector(':scope>b'), card.querySelector(':scope>p')]
+        .forEach(function(n){ if(n) n.hidden=true });
+    };
     wireInput(input);
     form.addEventListener('submit', function(e){
       e.preventDefault();
@@ -114,24 +147,39 @@
       if(!isValidPhone(input)){ err.hidden=false; err.textContent='Проверьте номер — нужно 10 цифр после +7'; input.focus(); return }
       btn.disabled=true; btn.classList.add('loading');
       QSCallback.request(input.dataset.raw).then(function(){
-        form.hidden=true; ok.hidden=false;
+        form.hidden=true; ok.hidden=false; hideCardIntro();
+        var num=document.getElementById(idPrefix+'Num');
+        if(num) num.textContent='+7 '+groupDigits(input.dataset.raw);
         var ring=document.getElementById(idPrefix+'Ring'), sec=document.getElementById(idPrefix+'Sec'), okTxt2=document.getElementById(idPrefix+'OkTxt');
         var total=30000, start=performance.now(), circ=2*Math.PI*16;
         ring.style.strokeDasharray=circ;
         var tick=function(now){
           var left=Math.max(0,total-(now-start)), s=left/1000;
-          sec.textContent=s.toFixed(1);
+          sec.textContent=Math.ceil(s);
           ring.style.strokeDashoffset=circ*(1-left/total);
           if(left>0) requestAnimationFrame(tick);
-          else { sec.textContent='0.0'; okTxt2.textContent='Перезваниваем — возьмите трубку' }
+          else {
+            sec.textContent='';
+            /* Замыкаем кольцо: иначе дуга уходит в ноль и вокруг трубки пусто */
+            ring.style.strokeDashoffset=0;
+            ok.classList.add('calling');
+            okTxt2.textContent='Перезваниваем — возьмите трубку';
+          }
         };
         requestAnimationFrame(tick);
         icons();
       }).catch(function(err){
         /* Повторная отправка — тихо показываем, что заявка уже ушла */
         if(err && (err.message==='busy' || err.message==='cooldown')){
-          form.hidden=true; ok.hidden=false;
+          form.hidden=true; ok.hidden=false; hideCardIntro();
+          ok.classList.add('calling');
+          var s2=document.getElementById(idPrefix+'Sec');
+          if(s2) s2.textContent='';
+          var r2=document.getElementById(idPrefix+'Ring');
+          if(r2){ r2.style.strokeDasharray=2*Math.PI*16; r2.style.strokeDashoffset=0 }
           document.getElementById(idPrefix+'OkTxt').textContent='Заявка уже принята — ожидайте звонка';
+          var n2=document.getElementById(idPrefix+'Num');
+          if(n2) n2.textContent='+7 '+groupDigits(input.dataset.raw);
           return;
         }
         /* Виджет не поднялся — не молчим, а даём позвонить самому */
