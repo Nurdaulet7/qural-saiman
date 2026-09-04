@@ -1,13 +1,52 @@
 /* QURAL-SAIMAN — виджет обратного звонка.
-   requestCallback(phone) — заявка уходит в WhatsApp менеджера.
-   Когда появится бэкенд/Binotel — заменить тело на fetch('/api/callback', {method:'POST', body:{phone}}). */
+   Дизайн наш, звонок — Binotel GetCall: их скрипт грузится скрытым, а заявка
+   уходит через его форму, которую мы заполняем программно. */
 (function(){
-  var MANAGER='77057802074';
-  var requestCallback = function(phone){
+  /* Экземпляр виджета лежит в BinotelGetCall под своим id — ищем по методу */
+  var getWidget=function(){
+    var B=window.BinotelGetCall;
+    if(!B) return null;
+    for(var k in B){ if(B[k] && typeof B[k].openPassiveForm==='function') return B[k] }
+    return null;
+  };
+  var waitWidget=function(){
     return new Promise(function(resolve){
-      var msg='Заявка на обратный звонок\nТелефон: '+phone+'\nСтраница: '+location.pathname.replace(/^\//,'');
-      try{ window.open('https://wa.me/'+MANAGER+'?text='+encodeURIComponent(msg),'_blank','noopener') }catch(e){}
-      setTimeout(resolve, 400);
+      var w=getWidget();
+      if(w) return resolve(w);
+      var t0=Date.now();
+      var iv=setInterval(function(){
+        var w2=getWidget();
+        if(w2 || Date.now()-t0>6000){ clearInterval(iv); resolve(w2) }
+      },150);
+    });
+  };
+  /* Их кнопку прячем сразу, как только скрипт поднимется */
+  waitWidget().then(function(W){ if(W && W.hidePhoneButton) try{ W.hidePhoneButton() }catch(e){} });
+
+  /* digits — ровно 10 цифр без кода страны, столько ждёт поле Binotel */
+  var requestCallback=function(digits){
+    return waitWidget().then(function(W){
+      if(!W) throw new Error('binotel-offline');
+      W.openPassiveForm();
+      return new Promise(function(resolve,reject){
+        var t0=Date.now();
+        var iv=setInterval(function(){
+          var inp=document.getElementById('bingc-passive-get-phone-form-input');
+          var btn=document.querySelector('.bingc-passive-phone-form-button');
+          if(inp && btn){
+            clearInterval(iv);
+            inp.value=digits;
+            ['input','keyup','change'].forEach(function(ev){ inp.dispatchEvent(new Event(ev,{bubbles:true})) });
+            setTimeout(function(){
+              btn.click();
+              setTimeout(function(){
+                try{ if(W.closeActiveForm) W.closeActiveForm() }catch(e){}
+                resolve();
+              },800);
+            },140);
+          } else if(Date.now()-t0>5000){ clearInterval(iv); reject(new Error('binotel-form')) }
+        },120);
+      });
     });
   };
   window.QSCallback = { request: requestCallback };
@@ -60,10 +99,9 @@
     form.addEventListener('submit', function(e){
       e.preventDefault();
       err.hidden=true;
-      if(!isValidPhone(input)){ err.hidden=false; input.focus(); return }
-      var phone='+7 '+groupDigits(input.dataset.raw);
+      if(!isValidPhone(input)){ err.hidden=false; err.textContent='Проверьте номер — нужно 10 цифр после +7'; input.focus(); return }
       btn.disabled=true; btn.classList.add('loading');
-      QSCallback.request(phone).then(function(){
+      QSCallback.request(input.dataset.raw).then(function(){
         form.hidden=true; ok.hidden=false;
         var ring=document.getElementById(idPrefix+'Ring'), sec=document.getElementById(idPrefix+'Sec'), okTxt2=document.getElementById(idPrefix+'OkTxt');
         var total=30000, start=performance.now(), circ=2*Math.PI*16;
@@ -77,6 +115,11 @@
         };
         requestAnimationFrame(tick);
         icons();
+      }).catch(function(){
+        /* Виджет не поднялся — не молчим, а даём позвонить самому */
+        btn.disabled=false; btn.classList.remove('loading');
+        err.hidden=false;
+        err.innerHTML='Не удалось отправить заявку. Позвоните нам: <a href="tel:+77057802074">+7 705 780 2074</a>';
       });
     });
   };

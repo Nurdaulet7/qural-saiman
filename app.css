@@ -467,7 +467,8 @@ body.noscroll{overflow:hidden}
   .cats .catall .ctx .ccnt{color:rgba(255,255,255,.5)}
   .cat>span:not(.ic){min-width:0}
   .rail{display:flex;gap:18px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:none;padding:6px 32px 30px;margin-bottom:-26px;scroll-padding-left:32px;scroll-padding-right:32px}
-  #hits .card{flex:0 0 240px;width:240px}
+  #hits .card,#relRail .card{flex:0 0 240px;width:240px}
+  .rail .card .sp{font-size:12px;line-height:1.4}
   .card:hover{transform:translateY(-3px)}
   .sec:has(.steps){display:block;margin:0 0 72px;padding:0;border-top:0}
   .sec:has(.steps) .sechead{padding:0 32px;margin-bottom:28px}
@@ -811,7 +812,7 @@ body.noscroll{overflow:hidden}
 
 .appbar .cnt{font-size:12px;font-weight:700;color:var(--muted);white-space:nowrap}
 
-.card .ph .fav{position:absolute;top:6px;right:6px;z-index:2;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.88);backdrop-filter:blur(4px);display:grid;place-items:center;transition:background var(--t)}
+.card .ph .fav{position:absolute;top:11px;right:11px;z-index:2;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.88);backdrop-filter:blur(4px);display:grid;place-items:center;transition:background var(--t)}
 .card .ph .fav::before{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px}
 .card .ph .fav svg{width:16px;height:16px;color:var(--muted);transition:color var(--t),fill var(--t);fill:transparent}
 .card .ph .fav.on svg{color:var(--orange);fill:var(--orange-soft)}
@@ -1213,3 +1214,6 @@ body.noscroll{overflow:hidden}
 /* Логотип TikTok — заливка, а не обводка: у lucide наоборот */
 .dfoot-social svg.tt,.mrow svg.tt{fill:currentColor;stroke:none}
 .mrow .ic svg.tt{width:17px;height:17px}
+
+/* Binotel GetCall: работает скрытым, наружу выходит только наша форма */
+#bingc-phone-button,#bingc-passive,#bingc-active{position:fixed!important;left:-9999px!important;top:-9999px!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important;visibility:hidden!important;z-index:-1!important}

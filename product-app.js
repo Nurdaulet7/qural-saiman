@@ -142,11 +142,32 @@
         var xpre=x.priceNote?'от ':'';
         return '<a class="card" href="product.html?id='+x.id+'">'+
           '<div class="ph">'+(x.badge==='hit'?'<span class="badge">хит</span>':'')+
-            (QS.hasPhoto(x.id)?'<img src="'+QS.photo(x.id)+'" alt="" loading="lazy" />':'<span class="noph"></span>')+'</div>'+
+            (QS.hasPhoto(x.id)?'<img src="'+QS.photo(x.id)+'" alt="" loading="lazy" />':'<span class="noph"></span>')+
+            '<button class="fav" type="button" data-fav="'+x.id+'" aria-label="В избранное"><i data-lucide="heart"></i></button></div>'+
           '<div class="body"><span class="nm">'+esc(x.name)+'</span>'+
-            '<span class="foot"><span class="pr">'+(x.price==null?'по запросу':xpre+QS.fmt(x.price)+'<small>в сутки</small>')+'</span></span></div></a>';
+            (x.spec?'<span class="sp">'+esc(x.spec)+'</span>':'')+
+            '<span class="foot"><span class="pr">'+(x.price==null?'по запросу':xpre+QS.fmt(x.price)+'<small>в сутки</small>')+'</span>'+
+            '<span class="plus"><i data-lucide="plus"></i></span></span></div></a>';
       }).join('')+'</div>';
     initRailNav(relSec);
+    relSec.querySelector('.rail').addEventListener('click', function(e){
+      var b=e.target.closest('[data-fav]');
+      if(b){
+        e.preventDefault(); e.stopPropagation();
+        if(!F) return;
+        b.classList.toggle('on', F.toggle(b.getAttribute('data-fav')));
+        return;
+      }
+      var p=e.target.closest('.plus');
+      if(p){
+        e.preventDefault(); e.stopPropagation();
+        var card=p.closest('.card'), id=(card.getAttribute('href')||'').split('id=')[1];
+        if(!id) return;
+        C.add(id,1);
+        p.classList.add('done');
+        setTimeout(function(){ p.classList.remove('done') },900);
+      }
+    });
   }
 
   /* нижняя панель действий */
