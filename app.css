@@ -1285,4 +1285,15 @@ body.noscroll{overflow:hidden}
 .mrow .ic svg.tt{width:17px;height:17px}
 
 /* Binotel GetCall: работает скрытым, наружу выходит только наша форма */
-#bingc-phone-button,#bingc-passive,#bingc-active{position:fixed!important;left:-9999px!important;top:-9999px!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important;visibility:hidden!important;z-index:-1!important}
+html:not(.bnt-native) #bingc-phone-button,
+html:not(.bnt-native) #bingc-passive,
+html:not(.bnt-native) #bingc-active{position:fixed!important;left:-9999px!important;top:-9999px!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important;visibility:hidden!important;z-index:-1!important}
+/* Режим проверки: наружу выходит их родной виджет, наши точки входа убраны */
+html.bnt-native .cbpopup,html.bnt-native .cbwrap,html.bnt-native #dfabCall,html.bnt-native .cbcta{display:none!important}
+/* Их кнопка занимает правый низ; наш плавающий блок уходит выше, чтобы не перекрывать */
+html.bnt-native #bingc-phone-button{bottom:calc(var(--tabh) + 12px)!important;left:auto!important;right:16px!important}
+@media (min-width:900px){
+  html.bnt-native #bingc-phone-button{bottom:24px!important;right:24px!important}
+  /* 24px отступ их кнопки + 97px её высота + 14px зазор — иначе она накрывает WhatsApp */
+  html.bnt-native .dfab{bottom:calc(24px + 97px + 14px)}
+}

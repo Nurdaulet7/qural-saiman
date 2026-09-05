@@ -2,6 +2,19 @@
    Дизайн наш, звонок — Binotel GetCall: их скрипт грузится скрытым, а заявка
    уходит через его форму, которую мы заполняем программно. */
 (function(){
+  /* ПРОВЕРКА: true — работает родной виджет Binotel, наша форма и кнопки скрыты.
+     Нужно, чтобы отделить проблему их АТС от нашей обёртки. Вернуть свой дизайн — false. */
+  var NATIVE = true;
+  if(NATIVE){
+    document.documentElement.classList.add('bnt-native');
+    /* Наши точки входа не должны открывать нашу форму — пусть кликают по их кнопке */
+    window.QSCallback = {
+      open:function(){ var b=document.getElementById('bingc-phone-button'); if(b) b.click() },
+      request:function(){ return Promise.reject(new Error('native')) },
+      native:true
+    };
+    return;
+  }
   /* Экземпляр виджета лежит в BinotelGetCall под своим id — ищем по методу */
   var getWidget=function(){
     var B=window.BinotelGetCall;
